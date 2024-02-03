@@ -11,14 +11,10 @@ import taboolib.common.platform.function.console
  */
 object ToolsUtil {
     fun printLogo() {
-        console().sendMessage("")
-
-        console().sendMessage("§b       ▪  .▄▄ ·  ▄ .▄▄▄▄ .▄▄▄▄▄▄▄▄ .▄▄▄   ▐ ▄ ▪  ▄▄▄▄▄ ▄· ▄▌")
-        console().sendMessage("§b ▪     ██ ▐█ ▀. ██▪▐█▀▄.▀·•██  ▀▄.▀·▀▄ █·•█▌▐███ •██  ▐█▪██▌")
-        console().sendMessage("§b  ▄█▀▄ ▐█·▄▀▀▀█▄██▀▐█▐▀▀▪▄ ▐█.▪▐▀▀▪▄▐▀▀▄ ▐█▐▐▌▐█· ▐█.▪▐█▌▐█▪")
-        console().sendMessage("§b ▐█▌.▐▌▐█▌▐█▄▪▐███▌▐▀▐█▄▄▌ ▐█▌·▐█▄▄▌▐█•█▌██▐█▌▐█▌ ▐█▌· ▐█▀·.")
-        console().sendMessage("§b ▀█▄▀▪▀▀▀ ▀▀▀▀ ▀▀▀ · ▀▀▀  ▀▀▀  ▀▀▀ .▀  ▀▀▀ █▪▀▀▀ ▀▀▀   ▀ • ")
-
-        console().sendMessage("")
+        console().sendMessage("§b   ____  _     __   ______               _ __      ")
+        console().sendMessage("§b  / __ \\(_)__ / /  / __/ /____ _______  (_) /___ __")
+        console().sendMessage("§b / /_/ / (_-</ _ \\/ _// __/ -_) __/ _ \\/ / __/ // /")
+        console().sendMessage("§b \\____/_/___/_//_/___/\\__/\\__/_/ /_//_/_/\\__/\\_, / ")
+        console().sendMessage("§b                                            /___/  ")
     }
 }
