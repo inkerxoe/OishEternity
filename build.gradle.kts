@@ -9,8 +9,17 @@ plugins {
 
 taboolib {
     env {
-        // 安装模块
-        install(UNIVERSAL, BUKKIT)
+        install(
+            UNIVERSAL,
+            METRICS,
+            BUKKIT_ALL
+        )
+    }
+    description {
+        contributors {
+            name("InkerXoe")
+        }
+        desc("Provide a flexible and powerful death punishment system for the Minecraft Bukkit server")
     }
     version { taboolib = "6.1.0" }
 }

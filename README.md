@@ -1,4 +1,4 @@
-# TabooLib SDK
+# OishEternity
 
 ## 构建发行版本
 
