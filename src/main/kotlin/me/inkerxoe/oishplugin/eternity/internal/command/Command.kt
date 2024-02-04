@@ -3,6 +3,7 @@ package me.inkerxoe.oishplugin.eternity.internal.command
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.runActions
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherScript
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
+import me.inkerxoe.oishplugin.eternity.internal.handle.CentralHandle
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
@@ -10,8 +11,11 @@ import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
 import taboolib.common.platform.command.subCommand
 import taboolib.common.platform.function.adaptCommandSender
+import taboolib.common.platform.function.console
 import taboolib.expansion.createHelper
 import taboolib.module.kether.printKetherErrorMessage
+import taboolib.module.lang.sendLang
+import taboolib.platform.util.bukkitPlugin
 import taboolib.platform.util.sendLang
 
 /**
@@ -62,13 +66,34 @@ object Command {
     @CommandBody
     val runJavaScript = subCommand {
         dynamic {
-            execute<CommandSender> {sender, _, content ->
+            execute<CommandSender> { sender, _, content ->
                 try {
                     ScriptManager.scriptEngine.put("player", sender)
                     val result = ScriptManager.scriptEngine.eval(content)?:""
                     sender.sendLang("Plugin-Script-Result-Format", result)
                 } catch (e: Throwable) {
                     e.printStackTrace()
+                }
+            }
+        }
+    }
+    @CommandBody
+    val runPlayDead = subCommand {
+        dynamic {
+            execute<CommandSender> { sender, _, content ->
+                if (content.isEmpty()) {
+                    if (sender is Player) {
+                        CentralHandle.transmit(null, sender, "kill")
+                    } else {
+                        console().sendLang("Plugin-NotPlayer")
+                    }
+                } else {
+                    val p = bukkitPlugin.server.getPlayer(content)
+                    if (p == null) {
+                        console().sendLang("Plugin-NullPlayer")
+                    } else {
+                        CentralHandle.transmit(null, p, "kill")
+                    }
                 }
             }
         }

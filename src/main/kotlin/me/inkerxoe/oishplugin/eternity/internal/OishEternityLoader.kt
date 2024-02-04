@@ -30,6 +30,7 @@ object OishEternityLoader {
     fun enable() {
         ToolsUtil.printLogo()
         console().sendLang("Plugin-Enabled")
+        ToolsUtil.debug("Debug模式已开启.")
     }
 
     @Awake(LifeCycle.DISABLE)

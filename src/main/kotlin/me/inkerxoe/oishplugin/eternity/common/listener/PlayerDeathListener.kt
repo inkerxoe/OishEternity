@@ -1,5 +1,6 @@
 package me.inkerxoe.oishplugin.eternity.common.listener
 
+import me.inkerxoe.oishplugin.eternity.internal.handle.CentralHandle
 import org.bukkit.event.entity.PlayerDeathEvent
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
@@ -14,10 +15,7 @@ import taboolib.common.platform.event.SubscribeEvent
 object PlayerDeathListener {
     @SubscribeEvent(priority = EventPriority.LOWEST, ignoreCancelled = true)
     fun listener(event: PlayerDeathEvent) {
-
-
-
-
+        CentralHandle.transmit(event, null,"death")
     }
 }
 
