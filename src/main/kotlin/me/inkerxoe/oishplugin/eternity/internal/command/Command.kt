@@ -51,7 +51,7 @@ object Command {
                             set("off-hand", sender.equipment?.itemInOffHand)
                         }
                     }.thenAccept {
-                        sender.sendLang("Script-Result-Format", it.toString())
+                        sender.sendLang("Plugin-Script-Result-Format", it.toString())
                     }
                 } catch (e: Exception) {
                     e.printKetherErrorMessage()
@@ -65,8 +65,8 @@ object Command {
             execute<CommandSender> {sender, _, content ->
                 try {
                     ScriptManager.scriptEngine.put("player", sender)
-                    val result = ScriptManager.scriptEngine.eval(content)
-                    sender.sendLang("Script-Result-Format", result)
+                    val result = ScriptManager.scriptEngine.eval(content)?:""
+                    sender.sendLang("Plugin-Script-Result-Format", result)
                 } catch (e: Throwable) {
                     e.printStackTrace()
                 }

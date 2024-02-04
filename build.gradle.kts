@@ -29,18 +29,13 @@ repositories {
     mavenCentral()
 }
 
-configurations{
-    maybeCreate("packShadow")
-    get("compileOnly").extendsFrom(get("packShadow"))
-    get("packShadow").extendsFrom(get("taboo"))
-}
-
 dependencies {
     compileOnly("ink.ptms.core:v12004:12004:mapped")
     compileOnly("ink.ptms.core:v12004:v12004:universal")
-    "packShadow"(fileTree("libs"))
-    "packShadow"(kotlin("stdlib"))
-    "packShadow"("org.openjdk.nashorn:nashorn-core:15.4")
+    // openjdk-nashorn
+    taboo(fileTree("libs/relocated-nashorn-15.4.jar"))
+    compileOnly(fileTree("libs"))
+    compileOnly(kotlin("stdlib"))
 }
 
 tasks.withType<JavaCompile> {

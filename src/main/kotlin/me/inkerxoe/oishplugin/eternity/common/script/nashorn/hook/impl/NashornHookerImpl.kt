@@ -1,15 +1,11 @@
 package me.inkerxoe.oishplugin.eternity.common.script.nashorn.hook.impl
 
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.hook.NashornHooker
-import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory
-import org.openjdk.nashorn.api.scripting.ScriptObjectMirror
-import taboolib.common.env.RuntimeDependencies
-import taboolib.common.env.RuntimeDependency
-import java.io.Reader
-import javax.script.Compilable
-import javax.script.CompiledScript
+import pers.neige.neigeitems.libs.nashorn.api.scripting.NashornScriptEngineFactory
+import pers.neige.neigeitems.libs.nashorn.api.scripting.ScriptObjectMirror
 import javax.script.Invocable
 import javax.script.ScriptEngine
+
 
 /**
  * OishEternity
