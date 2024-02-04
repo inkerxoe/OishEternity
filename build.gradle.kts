@@ -12,7 +12,8 @@ taboolib {
         install(
             UNIVERSAL,
             METRICS,
-            BUKKIT_ALL
+            BUKKIT_ALL,
+            KETHER
         )
     }
     description {
@@ -28,11 +29,18 @@ repositories {
     mavenCentral()
 }
 
+configurations{
+    maybeCreate("packShadow")
+    get("compileOnly").extendsFrom(get("packShadow"))
+    get("packShadow").extendsFrom(get("taboo"))
+}
+
 dependencies {
     compileOnly("ink.ptms.core:v12004:12004:mapped")
     compileOnly("ink.ptms.core:v12004:v12004:universal")
-    compileOnly(kotlin("stdlib"))
-    compileOnly(fileTree("libs"))
+    "packShadow"(fileTree("libs"))
+    "packShadow"(kotlin("stdlib"))
+    "packShadow"("org.openjdk.nashorn:nashorn-core:15.4")
 }
 
 tasks.withType<JavaCompile> {
