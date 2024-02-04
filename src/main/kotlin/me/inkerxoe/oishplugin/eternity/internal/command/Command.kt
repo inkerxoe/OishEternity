@@ -80,20 +80,12 @@ object Command {
     @CommandBody
     val runPlayDead = subCommand {
         dynamic {
-            execute<CommandSender> { sender, _, content ->
-                if (content.isEmpty()) {
-                    if (sender is Player) {
-                        CentralHandle.transmit(null, sender, "kill")
-                    } else {
-                        console().sendLang("Plugin-NotPlayer")
-                    }
+            execute<CommandSender> { _, _, content ->
+                val p = bukkitPlugin.server.getPlayer(content)
+                if (p == null) {
+                    console().sendLang("Plugin-NullPlayer")
                 } else {
-                    val p = bukkitPlugin.server.getPlayer(content)
-                    if (p == null) {
-                        console().sendLang("Plugin-NullPlayer")
-                    } else {
-                        CentralHandle.transmit(null, p, "kill")
-                    }
+                    CentralHandle.transmit(null, p, "kill")
                 }
             }
         }
