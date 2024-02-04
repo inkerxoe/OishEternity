@@ -23,7 +23,7 @@ object OishEternityLoader {
         console().sendMessage("")
         console().sendLang("Plugin-Loading", Bukkit.getServer().version)
         console().sendMessage("")
-        Metrics(20891, plugin.description.version, Platform.BUKKIT)
+        Metrics(20902, plugin.description.version, Platform.BUKKIT)
     }
 
     @Awake(LifeCycle.ENABLE)
