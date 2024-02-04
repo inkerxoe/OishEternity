@@ -1,5 +1,38 @@
-options:
-  key: example
+example:
+  desc: 'example config'
+  disposition:
+    check:
+      pre-action:
+      select:
+        enable: true
+        player:
+        exp:
+        custom:
+      region:
+        enable: true
+        world:
+        territory:
+        custom:
+      post-action:
+    action:
+      pre-action:
+      drop:
+        enable: true
+        type: ''
+        parameter: ''
+        custom:
+      relic:
+        enable: true
+        type: ''
+        parameter: ''
+        custom:
+      redeem:
+        enable: false
+        type: ''
+        parameter: ''
+        custom:
+      post-action:
+example1:
   desc: 'example config'
   disposition:
     check:

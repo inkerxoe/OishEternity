@@ -31,5 +31,4 @@ object HookerManager {
             // 主动下载nashorn
             else -> NashornHookerImpl()
         }
-
 }
