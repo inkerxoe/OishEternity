@@ -246,6 +246,7 @@ object ConfigUtils {
         return list
     }
 
+
     /**
      * 获取文件中所有顶级节点内容
      *
@@ -398,21 +399,6 @@ object ConfigUtils {
     }
 
     /**
-     * 获取文件中所有顶级节点内容
-     *
-     * @return 文件中所有顶级节点内容
-     */
-    @JvmStatic
-    fun File.getTop(): ArrayList<Any> {
-        val list = ArrayList<Any>()
-        val config = YamlConfiguration.loadConfiguration(this)
-        config.getKeys(false).forEach {
-            list.add(it)
-        }
-        return list
-    }
-
-    /**
      * 保存默认文件(不进行替换)
      *
      * @param resourcePath 文件路径
@@ -441,16 +427,6 @@ object ConfigUtils {
                     }
                 }
             }
-        }
-    }
-}
-fun createIfNotExists(name: String, vararg fileNames: String) {
-    val path = plugin.dataFolder.path
-    val dir = File("$path/$name")
-    if (!dir.exists()) {
-        dir.mkdir()
-        for (fileName in fileNames) {
-            safe { plugin.saveResource("$name/$fileName", true) }
         }
     }
 }

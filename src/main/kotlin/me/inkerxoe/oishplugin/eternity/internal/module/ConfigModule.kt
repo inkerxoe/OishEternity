@@ -2,9 +2,12 @@ package me.inkerxoe.oishplugin.eternity.internal.module
 
 import me.inkerxoe.oishplugin.eternity.OishEternity
 import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils
-import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils.getTop
+import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils.saveResourceNotWarn
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.configuration.ConfigurationSection
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+import java.io.File
 
 /**
  * OishEternity
@@ -14,24 +17,24 @@ import org.bukkit.configuration.ConfigurationSection
  * @since 2024/2/4 16:27
  */
 object ConfigModule {
-    val map: MutableMap<String,ConfigurationSection> = hashMapOf()
-    fun loadConfigs(){
-        val yml = ConfigUtils.getAllFiles(OishEternity.plugin,"workspace").filter {
-            it.endsWith(".yml")
+    val options_debug
+        get() = OishEternity.setting.getBoolean("options.debug", false)
+
+    @Awake(LifeCycle.INIT)
+    fun saveResource() {
+        if (ConfigUtils.getFileOrNull("workspace") == null) {
+            OishEternity.plugin.saveResourceNotWarn("workspace${File.separator}example.yml")
         }
-        yml.forEach { file ->
-            file.getTop().filter {
-                it is ConfigurationSection
-            }.forEach {
-                it as ConfigurationSection
-                map[it.name] = it
-                ToolsUtil.debug("ConfigLoading: $it")
-            }
+        if (ConfigUtils.getFileOrNull("script") == null) {
+            OishEternity.plugin.saveResourceNotWarn("script${File.separator}example.js")
         }
     }
 
-    fun reload(){
-        map.clear()
-        loadConfigs()
+    /**
+     * 重载配置管理器
+     */
+    fun reload() {
+        OishEternity.plugin.reloadConfig()
+        saveResource()
     }
 }

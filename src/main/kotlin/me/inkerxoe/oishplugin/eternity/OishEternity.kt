@@ -1,7 +1,6 @@
 package me.inkerxoe.oishplugin.eternity
 
-import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
-import me.inkerxoe.oishplugin.eternity.utils.createIfNotExists
+
 import org.bukkit.Bukkit
 import taboolib.common.platform.Plugin
 import taboolib.module.configuration.Config

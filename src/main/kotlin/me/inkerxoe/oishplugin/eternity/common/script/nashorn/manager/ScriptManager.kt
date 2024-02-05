@@ -3,7 +3,10 @@ package me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.script.CompiledScript
 import me.inkerxoe.oishplugin.eternity.internal.manager.HookerManager.nashornHooker
 import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils.getAllFiles
+import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.Bukkit
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import java.io.File
 
 /**
@@ -29,20 +32,19 @@ object ScriptManager {
      */
     val compiledScripts = HashMap<String, CompiledScript>()
 
-    init {
-        // 加载全部脚本
-        loadScripts()
-    }
 
     /**
      * 加载全部脚本
      */
+    @Awake(LifeCycle.ENABLE)
     private fun loadScripts() {
-        for (file in getAllFiles("workspace${File.separator}scripts")) {
-            val fileName =
-                file.path.replace("plugins${File.separator}OishEternity${File.separator}workspace${File.separator}scripts${File.separator}", "")
+        ToolsUtil.debug("loadScript...")
+        for (file in getAllFiles("script")) {
+            file.path.replace("plugins${File.separator}OishEternity${File.separator}scripts${File.separator}", "")
             try {
-                compiledScripts[fileName] = CompiledScript(file)
+                val key = file.name
+                compiledScripts[key] = CompiledScript(file)
+                ToolsUtil.debug("compiledScript[${key}] -> ${compiledScripts[key]}")
             } catch (error: Throwable) {
                 error.printStackTrace()
             }

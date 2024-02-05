@@ -3,7 +3,9 @@ package me.inkerxoe.oishplugin.eternity.internal.command
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.runActions
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherScript
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
+import me.inkerxoe.oishplugin.eternity.internal.command.subcommand.Reload
 import me.inkerxoe.oishplugin.eternity.internal.handle.CentralHandle
+import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
@@ -12,11 +14,13 @@ import taboolib.common.platform.command.mainCommand
 import taboolib.common.platform.command.subCommand
 import taboolib.common.platform.function.adaptCommandSender
 import taboolib.common.platform.function.console
+import taboolib.common.platform.function.info
 import taboolib.expansion.createHelper
 import taboolib.module.kether.printKetherErrorMessage
 import taboolib.module.lang.sendLang
 import taboolib.platform.util.bukkitPlugin
 import taboolib.platform.util.sendLang
+import kotlin.coroutines.Continuation
 
 /**
  * OishEternity
@@ -90,4 +94,6 @@ object Command {
             }
         }
     }
+    @CommandBody
+    val reload = Reload.reload
 }

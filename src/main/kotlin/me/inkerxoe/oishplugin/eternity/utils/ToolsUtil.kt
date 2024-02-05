@@ -1,6 +1,7 @@
 package me.inkerxoe.oishplugin.eternity.utils
 
 import me.inkerxoe.oishplugin.eternity.internal.manager.ConfigManager
+import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
 import taboolib.common.platform.function.console
 import taboolib.common5.Coerce
 import taboolib.module.lang.sendLang
@@ -22,7 +23,7 @@ object ToolsUtil {
     }
 
     fun debug(text: String) {
-        if (ConfigManager.options_debug) {
+        if (ConfigModule.options_debug) {
             console().sendLang("Plugin-Debug", text)
         }
     }
