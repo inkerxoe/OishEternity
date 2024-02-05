@@ -101,40 +101,4 @@ object Command {
     }
     @CommandBody
     val reload = Reload.reload
-    @CommandBody
-    val test = subCommand {
-        execute<CommandSender> { _, _, _ ->
-            for ((key, value) in ConfigManager.map) {
-                ToolsUtil.debug("-----=Check <-> $key <-> Start=-----")
-                // 总配置
-                val disposition = value["disposition"].asMap()
-                // 判断逻辑配置
-                val check = disposition["check"].asMap()
-                // 动作逻辑配置
-                val action = disposition["action"].asMap()
-
-                // pre-action
-                val preAction = check["pre-action"].asMap()
-                val type = preAction["type"].toString()
-                ToolsUtil.debug("set pre-action.type to $preAction")
-                val script = preAction["script"].toString()
-                ToolsUtil.debug("set pre-action.script to $script")
-                var result = false
-                when (type) {
-                    ConfigModule.options_script_identifiers_kETHER -> {
-                        result = ScriptModule.runActionKe(script, listOf(1)).toResult()
-                    }
-                    ConfigModule.options_script_identifiers_JAVASCRIPT -> {
-                        result = ScriptModule.runActionJs(script, listOf(1)).toResult()
-                    }
-                }
-                ToolsUtil.debug("pre-action result -> $result")
-                fun check() {
-
-                }
-                if (result) check()
-                ToolsUtil.debug("-----=Check <-> $key <-> End=-----")
-            }
-        }
-    }
 }

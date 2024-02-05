@@ -19,10 +19,23 @@ import java.io.File
 object ConfigModule {
     val options_debug
         get() = OishEternity.setting.getBoolean("options.debug", false)
-    val options_script_identifiers_kETHER
-        get() = OishEternity.setting.getString("options.script-identifiers.kether")
-    val options_script_identifiers_JAVASCRIPT
-        get() = OishEternity.setting.getString("options.script-identifiers.javascript")
+    val options_identifiers_script_KETHER
+        get() = OishEternity.setting.getString("options.identifiers.script.kether")
+    val options_identifiers_script_JAVASCRIPT
+        get() = OishEternity.setting.getString("options.identifiers.script.javascript")
+    val options_identifiers_select_player_type_appoint
+        get() = OishEternity.setting.getString("options.identifiers.select.player.type.appoint")
+    val options_identifiers_select_player_type_all
+        get() = OishEternity.setting.getString("options.identifiers.select.player.type.all")
+    val options_identifiers_select_player_type_custom
+        get() = OishEternity.setting.getString("options.identifiers.select.player.type.custom")
+    val options_identifiers_select_perm_type_appoint
+        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.appoint")
+    val options_identifiers_select_perm_type_portion
+        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.portion")
+    val options_identifiers_select_perm_type_custom
+        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.custom")
+
 
     @Awake(LifeCycle.INIT)
     fun saveResource() {

@@ -9,14 +9,42 @@ example:
       select:
         enable: true
         player:
-        exp:
+          enable: true
+          config:
+            #type[appoint， all, custom]
+            type: 'appoint'
+            info:
+              - 'InkerXoe'
+              - 'OishEternity'
+        perm:
+          enable: true
+          config:
+            #type[appoint, portion, custom]
+            type: 'portion'
+            info:
+              - 'oish.eternity.perm'
+              - 'oish.eternity.perms'
         custom:
+          enable: false
+          type: 'js'
+          script: |-
+            print "Select Custom Script."
       region:
         enable: true
         world:
+          enable: true
+
         territory:
+          enable: true
         custom:
+          enable: false
+          type: 'js'
+          script: |-
+            print "Region Custom Script."
       post-action:
+        type: kether
+        script: |-
+          print "Post-Action."
     action:
       pre-action:
       drop:

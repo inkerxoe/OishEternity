@@ -1,5 +1,17 @@
 options:
   debug: false
-  script-identifiers:
-    javascript: 'js'
-    kether: 'ke'
+  identifiers:
+    script:
+      javascript: 'js' # JavaScript
+      kether: 'ke' #Kether
+    select:
+      player:
+        type:
+          appoint: 'appoint' #指定玩家列表
+          all: 'all' #任何玩家
+          custom: 'custom' #自定义判断逻辑
+      perm:
+        type:
+          appoint: 'appoint' #拥有以下所有权限
+          portion: 'portion' #拥有以下任一权限
+          custom: 'custom' #自定义判断逻辑
