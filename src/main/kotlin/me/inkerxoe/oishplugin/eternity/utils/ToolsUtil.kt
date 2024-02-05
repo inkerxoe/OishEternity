@@ -35,4 +35,11 @@ object ToolsUtil {
     fun timing(start: Long): Double {
         return Coerce.format((System.nanoTime() - start).div(1000000.0))
     }
+
+    fun Any.toResult(): Boolean {
+        return when (this) {
+            is Boolean -> { this }
+            else -> { true }
+        }
+    }
 }

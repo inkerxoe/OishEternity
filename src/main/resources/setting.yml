@@ -1,2 +1,5 @@
 options:
   debug: false
+  script-identifiers:
+    javascript: 'js'
+    kether: 'ke'

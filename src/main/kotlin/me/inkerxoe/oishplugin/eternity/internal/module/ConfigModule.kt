@@ -19,6 +19,10 @@ import java.io.File
 object ConfigModule {
     val options_debug
         get() = OishEternity.setting.getBoolean("options.debug", false)
+    val options_script_identifiers_kETHER
+        get() = OishEternity.setting.getString("options.script-identifiers.kether")
+    val options_script_identifiers_JAVASCRIPT
+        get() = OishEternity.setting.getString("options.script-identifiers.javascript")
 
     @Awake(LifeCycle.INIT)
     fun saveResource() {

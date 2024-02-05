@@ -5,7 +5,11 @@ import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherS
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
 import me.inkerxoe.oishplugin.eternity.internal.command.subcommand.Reload
 import me.inkerxoe.oishplugin.eternity.internal.handle.CentralHandle
+import me.inkerxoe.oishplugin.eternity.internal.manager.ConfigManager
 import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
+import me.inkerxoe.oishplugin.eternity.internal.module.ScriptModule
+import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
+import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.toResult
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
@@ -16,6 +20,7 @@ import taboolib.common.platform.function.adaptCommandSender
 import taboolib.common.platform.function.console
 import taboolib.common.platform.function.info
 import taboolib.expansion.createHelper
+import taboolib.module.configuration.util.asMap
 import taboolib.module.kether.printKetherErrorMessage
 import taboolib.module.lang.sendLang
 import taboolib.platform.util.bukkitPlugin
@@ -96,4 +101,40 @@ object Command {
     }
     @CommandBody
     val reload = Reload.reload
+    @CommandBody
+    val test = subCommand {
+        execute<CommandSender> { _, _, _ ->
+            for ((key, value) in ConfigManager.map) {
+                ToolsUtil.debug("-----=Check <-> $key <-> Start=-----")
+                // 总配置
+                val disposition = value["disposition"].asMap()
+                // 判断逻辑配置
+                val check = disposition["check"].asMap()
+                // 动作逻辑配置
+                val action = disposition["action"].asMap()
+
+                // pre-action
+                val preAction = check["pre-action"].asMap()
+                val type = preAction["type"].toString()
+                ToolsUtil.debug("set pre-action.type to $preAction")
+                val script = preAction["script"].toString()
+                ToolsUtil.debug("set pre-action.script to $script")
+                var result = false
+                when (type) {
+                    ConfigModule.options_script_identifiers_kETHER -> {
+                        result = ScriptModule.runActionKe(script, listOf(1)).toResult()
+                    }
+                    ConfigModule.options_script_identifiers_JAVASCRIPT -> {
+                        result = ScriptModule.runActionJs(script, listOf(1)).toResult()
+                    }
+                }
+                ToolsUtil.debug("pre-action result -> $result")
+                fun check() {
+
+                }
+                if (result) check()
+                ToolsUtil.debug("-----=Check <-> $key <-> End=-----")
+            }
+        }
+    }
 }

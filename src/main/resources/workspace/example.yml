@@ -3,6 +3,9 @@ example:
   disposition:
     check:
       pre-action:
+        type: kether
+        script: |-
+          print "Pre-Action."
       select:
         enable: true
         player:

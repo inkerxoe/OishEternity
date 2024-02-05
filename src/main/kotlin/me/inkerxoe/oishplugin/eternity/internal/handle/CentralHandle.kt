@@ -72,7 +72,7 @@ object CentralHandle {
     }
 
     private fun deathHandle(event: PlayerDeathEvent) {
-
+        DeathHandle.preHandle(event)
     }
 
     private fun killHandle(player: Player) {
