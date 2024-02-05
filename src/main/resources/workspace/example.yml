@@ -11,7 +11,7 @@ example:
         player:
           enable: true
           config:
-            #type[appoint， all, custom]
+            #type[portion， all, custom]
             type: 'appoint'
             info:
               - 'InkerXoe'
@@ -32,10 +32,18 @@ example:
       region:
         enable: true
         world:
+          #type[portion, custom]
           enable: true
-
+          type: 'portion'
+          info:
+            - 'world'
         territory:
+          #type[portion, custom]
           enable: true
+          type: 'portion'
+          adapter: 'gs'
+          info:
+            - 'test'
         custom:
           enable: false
           type: 'js'

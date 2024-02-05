@@ -38,6 +38,7 @@ object SelectModule {
         val type = conf["type"].toString()
         val info = conf["info"]!!.asList()
         val display = player.name
+
         when (type) {
             ConfigModule.options_identifiers_select_player_type_appoint -> {
                 if (display in info) {

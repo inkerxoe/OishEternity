@@ -7,7 +7,7 @@ options:
     select:
       player:
         type:
-          appoint: 'appoint' #指定玩家列表
+          portion: 'portion' #指定玩家列表
           all: 'all' #任何玩家
           custom: 'custom' #自定义判断逻辑
       perm:
@@ -15,3 +15,16 @@ options:
           appoint: 'appoint' #拥有以下所有权限
           portion: 'portion' #拥有以下任一权限
           custom: 'custom' #自定义判断逻辑
+    region:
+      world:
+        type:
+          portion: 'portion' #拥有以下任一权限
+          custom: 'custom' #自定义判断逻辑
+      territory:
+        type:
+          portion: 'portion' #拥有以下任一权限
+          custom: 'custom' #自定义判断逻辑
+        adapter:
+          residence: 'res'
+          grief-defender: 'gd'
+          world-guard: 'wg'

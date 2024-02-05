@@ -119,7 +119,7 @@ object CentralHandle {
 
             // region 配置
             val region = check["region"].asMap()
-            if (!RegionModule.handle(region, sender!!)) return@filter false
+            if (!RegionModule.handle(region, sender)) return@filter false
 
             ToolsUtil.debug("-----=Check <-> $key <-> End=-----")
             return@filter true
