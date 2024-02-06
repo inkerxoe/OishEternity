@@ -67,7 +67,7 @@ object SelectModule {
                 }
             }
         }
-        return true
+        return false
     }
 
     private fun selectPerm(map:  Map<String, Any?>, player: Player): Boolean {
@@ -106,7 +106,7 @@ object SelectModule {
                 }
             }
         }
-        return true
+        return false
     }
 
     private fun selectCustom(map:  Map<String, Any?>, player: Player): Boolean {
@@ -126,6 +126,6 @@ object SelectModule {
                 return ScriptModule.runActionKe(script, args)
             }
         }
-        return true
+        return false
     }
 }

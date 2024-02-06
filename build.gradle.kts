@@ -20,6 +20,11 @@ taboolib {
         contributors {
             name("InkerXoe")
         }
+        dependencies {
+            name("Residence").with("bukkit").optional(true)
+            name("GriefDefender").with("bukkit").optional(true)
+            name("WorldGuard").with("bukkit").optional(true)
+        }
         desc("Provide a flexible and powerful death punishment system for the Minecraft Bukkit server")
     }
     version { taboolib = "6.1.0" }
@@ -27,11 +32,15 @@ taboolib {
 
 repositories {
     mavenCentral()
+    maven("https://repo.glaremasters.me/repository/bloodshot")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
     compileOnly("ink.ptms.core:v12004:12004:mapped")
     compileOnly("ink.ptms.core:v12004:v12004:universal")
+    compileOnly("com.griefdefender:api:2.1.0-SNAPSHOT")
+    compileOnly(dependencyNotation = "com.sk89q.worldguard:worldguard-bukkit:7.0.0")
     // openjdk-nashorn
     taboo(fileTree("libs/relocated-nashorn-15.4.jar"))
     compileOnly(fileTree("libs"))

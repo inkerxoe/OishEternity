@@ -26,5 +26,5 @@ options:
           custom: 'custom' #自定义判断逻辑
         adapter:
           residence: 'res'
-          grief-defender: 'gd'
-          world-guard: 'wg'
+          grief_defender: 'gd'
+          world_guard: 'wg'

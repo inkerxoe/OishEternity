@@ -1,6 +1,7 @@
 package me.inkerxoe.oishplugin.eternity.internal
 
 import me.inkerxoe.oishplugin.eternity.OishEternity.plugin
+import me.inkerxoe.oishplugin.eternity.internal.manager.HookerManager
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.Bukkit
 import taboolib.common.LifeCycle
@@ -29,6 +30,9 @@ object OishEternityLoader {
     @Awake(LifeCycle.ENABLE)
     fun enable() {
         ToolsUtil.printLogo()
+        HookerManager.ResidenceHooker
+        HookerManager.GriefDefenderHooker
+        HookerManager.WorldGuardHooker
         console().sendLang("Plugin-Enabled")
         ToolsUtil.debug("Debug模式已开启.")
     }

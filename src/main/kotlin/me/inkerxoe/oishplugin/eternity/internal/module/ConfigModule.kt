@@ -35,6 +35,25 @@ object ConfigModule {
         get() = OishEternity.setting.getString("options.identifiers.select.perm.type.portion")
     val options_identifiers_select_perm_type_custom
         get() = OishEternity.setting.getString("options.identifiers.select.perm.type.custom")
+    val options_identifiers_region_world_type_portion
+        get() = OishEternity.setting.getString("options.identifiers.region.world.type.portion")
+    val options_identifiers_region_world_type_custom
+        get() = OishEternity.setting.getString("options.identifiers.region.world.type.custom")
+    val options_identifiers_region_territory_type_portion
+        get() = OishEternity.setting.getString("options.identifiers.region.territory.type.portion")
+    val options_identifiers_region_territory_type_custom
+        get() = OishEternity.setting.getString("options.identifiers.region.territory.type.custom")
+    val options_identifiers_region_territory_type_adapter_residence
+        get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.residence")
+    val options_identifiers_region_territory_type_adapter_grief_defender
+        get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.grief-defender")
+    val options_identifiers_region_territory_type_adapter_world_guard
+        get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.world_guard")
+
+
+
+
+
 
 
     @Awake(LifeCycle.INIT)
