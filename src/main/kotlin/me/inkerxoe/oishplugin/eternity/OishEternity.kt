@@ -12,6 +12,12 @@ object OishEternity : Plugin() {
 
     val bukkitScheduler by lazy { Bukkit.getScheduler() }
 
+    val hookerGriefDefender by lazy { Bukkit.getPluginManager().isPluginEnabled("GriefDefender") }
+
+    val hookerResidence by lazy { Bukkit.getPluginManager().isPluginEnabled("Residence") }
+
+    val hookerWorldGuard by lazy { Bukkit.getPluginManager().isPluginEnabled("WorldGuard") }
+
     @Config("setting.yml", autoReload = false)
     lateinit var setting: ConfigFile
 }
