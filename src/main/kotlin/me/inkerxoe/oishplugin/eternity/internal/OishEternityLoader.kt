@@ -37,6 +37,8 @@ object OishEternityLoader {
         ToolsUtil.debug("Debug模式已开启.")
     }
 
+
+
     @Awake(LifeCycle.DISABLE)
     fun disable() {
         console().sendLang("Plugin-Disable")

@@ -35,11 +35,11 @@ object RegionModule {
 
         // region territory
         val territory = config["territory"].asMap()
-        if (!regionTerritory(region, sender)) return false
+        if (!regionTerritory(territory, sender)) return false
 
         // region custom
         val custom = config["custom"].asMap()
-        return runCustom(region, sender)
+        return runCustom(custom, sender)
     }
 
     private fun regionWorld(map:  Map<String, Any?>, player: Player): Boolean {
