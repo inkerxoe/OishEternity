@@ -5,9 +5,11 @@ import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherS
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.script.CompiledScript
 import me.inkerxoe.oishplugin.eternity.internal.manager.HookerManager.nashornHooker
+import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.toResult
 import taboolib.module.kether.printKetherErrorMessage
 import taboolib.platform.util.sendLang
+import javax.tools.Tool
 
 /**
  * OishEternity
@@ -31,11 +33,13 @@ object ScriptModule {
             scr.toKetherScript().runActions {
                 set("args", args)
             }.thenAccept {
+                ToolsUtil.debug("this -> $this")
                 result = this.toResult()
             }
         } catch (e: Exception) {
             e.printKetherErrorMessage()
         }
+        ToolsUtil.debug("result -> $result")
         return result
     }
 

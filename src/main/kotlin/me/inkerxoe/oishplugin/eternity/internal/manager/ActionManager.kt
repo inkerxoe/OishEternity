@@ -2,6 +2,7 @@ package me.inkerxoe.oishplugin.eternity.internal.manager
 
 import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
 import me.inkerxoe.oishplugin.eternity.internal.module.ScriptModule
+import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.PlayerDeathEvent
 import taboolib.platform.util.killer
@@ -15,6 +16,8 @@ import taboolib.platform.util.killer
  */
 object ActionManager {
     fun runAction(typ: String, sender: Player?, script: String, event: PlayerDeathEvent?, type: String, args: HashMap<Any, Any>): Boolean {
+        ToolsUtil.debug("runAction")
+        ToolsUtil.debug("type -> $typ")
         when (typ) {
             ConfigModule.options_identifiers_script_KETHER -> {
                 // Kether PreAction 动作预设变量
@@ -28,6 +31,7 @@ object ActionManager {
                     defaultArgs["killer"] = event.killer?:"null" // 击杀者
                 }
                 val newArgs = (defaultArgs + args) as HashMap<Any, Any>
+                ToolsUtil.debug("newArgs -> $newArgs")
                 return ScriptModule.runActionKe(script, newArgs)
             }
             ConfigModule.options_identifiers_script_JAVASCRIPT -> {
