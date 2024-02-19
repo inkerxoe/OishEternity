@@ -23,34 +23,18 @@ object ConfigModule {
         get() = OishEternity.setting.getString("options.identifiers.script.kether")
     val options_identifiers_script_JAVASCRIPT
         get() = OishEternity.setting.getString("options.identifiers.script.javascript")
-    val options_identifiers_select_player_type_appoint
-        get() = OishEternity.setting.getString("options.identifiers.select.player.type.appoint")
-    val options_identifiers_select_player_type_all
-        get() = OishEternity.setting.getString("options.identifiers.select.player.type.all")
-    val options_identifiers_select_player_type_custom
-        get() = OishEternity.setting.getString("options.identifiers.select.player.type.custom")
-    val options_identifiers_select_perm_type_appoint
-        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.appoint")
+    val options_identifiers_select_perm_type_all
+        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.all")
     val options_identifiers_select_perm_type_portion
         get() = OishEternity.setting.getString("options.identifiers.select.perm.type.portion")
-    val options_identifiers_select_perm_type_custom
-        get() = OishEternity.setting.getString("options.identifiers.select.perm.type.custom")
-    val options_identifiers_region_world_type_portion
-        get() = OishEternity.setting.getString("options.identifiers.region.world.type.portion")
-    val options_identifiers_region_world_type_custom
-        get() = OishEternity.setting.getString("options.identifiers.region.world.type.custom")
-    val options_identifiers_region_territory_type_portion
-        get() = OishEternity.setting.getString("options.identifiers.region.territory.type.portion")
-    val options_identifiers_region_territory_type_custom
-        get() = OishEternity.setting.getString("options.identifiers.region.territory.type.custom")
     val options_identifiers_region_territory_type_adapter_residence
         get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.residence")
     val options_identifiers_region_territory_type_adapter_grief_defender
         get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.grief-defender")
     val options_identifiers_region_territory_type_adapter_world_guard
         get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.world_guard")
-
-
+    val options_death_info
+        get() = OishEternity.setting.getBoolean("options.death_info", true)
 
 
 

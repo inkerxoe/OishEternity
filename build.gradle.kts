@@ -13,7 +13,9 @@ taboolib {
             UNIVERSAL,
             METRICS,
             BUKKIT_ALL,
-            KETHER
+            KETHER,
+            NMS,
+            NMS_UTIL
         )
     }
     description {
@@ -41,8 +43,7 @@ dependencies {
     compileOnly("ink.ptms.core:v12004:v12004:universal")
     compileOnly("com.griefdefender:api:2.1.0-SNAPSHOT")
     compileOnly(dependencyNotation = "com.sk89q.worldguard:worldguard-bukkit:7.0.0")
-    // openjdk-nashorn
-    taboo(fileTree("libs/relocated-nashorn-15.4.jar"))
+    taboo(fileTree("libs"))
     compileOnly(fileTree("libs"))
     compileOnly(kotlin("stdlib"))
 }

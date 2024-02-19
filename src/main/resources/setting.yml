@@ -1,29 +1,16 @@
 options:
   debug: false
+  death_info: true
   identifiers:
     script:
       javascript: 'js' # JavaScript
       kether: 'ke' #Kether
     select:
-      player:
-        type:
-          portion: 'portion' #指定玩家列表
-          all: 'all' #任何玩家
-          custom: 'custom' #自定义判断逻辑
       perm:
         type:
-          appoint: 'appoint' #拥有以下所有权限
+          all: 'all' #拥有以下所有权限
           portion: 'portion' #拥有以下任一权限
-          custom: 'custom' #自定义判断逻辑
     region:
-      world:
-        type:
-          portion: 'portion' #拥有以下任一权限
-          custom: 'custom' #自定义判断逻辑
-      territory:
-        type:
-          portion: 'portion' #拥有以下任一权限
-          custom: 'custom' #自定义判断逻辑
         adapter:
           residence: 'res'
           grief_defender: 'gd'

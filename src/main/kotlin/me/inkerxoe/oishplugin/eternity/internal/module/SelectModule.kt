@@ -1,7 +1,5 @@
 package me.inkerxoe.oishplugin.eternity.internal.module
 
-import me.inkerxoe.oishplugin.eternity.internal.manager.CustomManager.runAction
-import me.inkerxoe.oishplugin.eternity.internal.manager.CustomManager.runCustom
 import org.bukkit.entity.Player
 import taboolib.common.util.asList
 import taboolib.common5.cbool
@@ -12,50 +10,32 @@ import taboolib.module.configuration.util.asMap
  * me.inkerxoe.oishplugin.eternity.internal.module
  *
  * @author InkerXoe
- * @since 2024/2/5 15:39
+ * @since 2024/2/19 上午11:33
  */
 object SelectModule {
-    fun handle(config: Map<String, Any?>, sender: Player): Boolean {
+    fun handle(config: Map<String, Any?>, player: Player): Boolean {
         // select enable
         val enable = config["enable"].cbool
         if (!enable) return false
 
         // select player
-        val player = config["player"].asMap()
-        if (!selectPlayer(player, sender)) return false
+        val playerConfig = config["player"].asMap()
+        if (!selectPlayer(playerConfig, player)) return false
 
         // select perm
         val perm = config["perm"].asMap()
-        if(!selectPerm(perm, sender)) return false
+        if(!selectPerm(perm, player)) return false
 
-        // select custom
-        val custom = config["custom"].asMap()
-        return runCustom(custom, sender)
+        return true
     }
 
     private fun selectPlayer(map:  Map<String, Any?>, player: Player): Boolean {
         val enable = map["enable"].cbool
         if (!enable) return false
         val conf = map["config"].asMap()
-        val type = conf["type"].toString()
         val info = conf["info"]!!.asList()
         val display = player.name
-
-        when (type) {
-            ConfigModule.options_identifiers_select_player_type_appoint -> {
-                if (display in info) {
-                    return true
-                }
-            }
-            ConfigModule.options_identifiers_select_player_type_all -> {
-                return true
-            }
-            ConfigModule.options_identifiers_select_player_type_custom -> {
-                // 自定义逻辑
-                val custom = conf["custom"].asMap()
-                return runAction(custom, player)
-            }
-        }
+        if (display in info) return true
         return false
     }
 
@@ -66,7 +46,7 @@ object SelectModule {
         val type = conf["type"].toString()
         val info = conf["info"]!!.asList()
         when (type) {
-            ConfigModule.options_identifiers_select_perm_type_appoint -> {
+            ConfigModule.options_identifiers_select_perm_type_all -> {
                 for (perm in info) {
                     if (!player.hasPermission(perm)) return false
                 }
@@ -75,11 +55,6 @@ object SelectModule {
                 for (perm in info) {
                     if (player.hasPermission(perm)) return true
                 }
-            }
-            ConfigModule.options_identifiers_select_perm_type_custom -> {
-                // 自定义逻辑
-                val custom = conf["custom"].asMap()
-                return runAction(custom, player)
             }
         }
         return false

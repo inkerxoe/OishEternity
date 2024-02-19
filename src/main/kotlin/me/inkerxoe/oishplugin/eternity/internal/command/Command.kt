@@ -4,7 +4,6 @@ import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.runAction
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherScript
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
 import me.inkerxoe.oishplugin.eternity.internal.command.subcommand.Reload
-import me.inkerxoe.oishplugin.eternity.internal.handle.CentralHandle
 import me.inkerxoe.oishplugin.eternity.internal.manager.ConfigManager
 import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
 import me.inkerxoe.oishplugin.eternity.internal.module.ScriptModule
@@ -86,19 +85,7 @@ object Command {
             }
         }
     }
-    @CommandBody
-    val runPlayDead = subCommand {
-        dynamic {
-            execute<CommandSender> { _, _, content ->
-                val p = bukkitPlugin.server.getPlayer(content)
-                if (p == null) {
-                    console().sendLang("Plugin-NullPlayer")
-                } else {
-                    CentralHandle.transmit(null, p, "kill")
-                }
-            }
-        }
-    }
+
     @CommandBody
     val reload = Reload.reload
 }

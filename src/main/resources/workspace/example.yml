@@ -1,86 +1,132 @@
+# 该配置文件的Key 请确保唯一不重复
 example:
+  # 该文件的Desc描述 无实际作用，在指令/death list中更方便管理配置
   desc: 'example config'
+  # 配置文件的权重，权重高的优先
+  # 在大多数时候根据Check节点判断出得配置并不是唯一的，可能玩家同时满足多个Check节点判断
+  # 此时就需要权重来决定选择到那个Check节点所属的配置文件
+  # 如一个配置权重是10 一个是100 则当Check节点同时这两个满足的时候 执行权重为100的配置文件中的Action节点
+  weight: 100
+  # 主配置
   disposition:
+    # Check节点 负责根据玩家死亡信息来判断处玩家对应的配置
     check:
+      # Pre-Action 顾名思义 即在一切的开始前执行的脚本动作
+      # 当返回true时 继续下面的判断 反之则停止，跳过本配置
       pre_action:
+        # 是否开启
+        # true 则开启 会进行判断 效果如上所说
+        # false 则关闭 不会判断 相当于开始时返回了true 直接执行下面的配置
+        enable: false
+        #脚本类型
+        # 目前支持Kether和JavaScript
+        # 标识名可在setting.yml 中改
+        # 标识名的作用就是你可以简化书写，比如你配置了kether的标识名为ke 则此时type既可以填ke
         type: kether
+        # 执行的脚本动作
         script: |-
           print "Pre-Action."
+      # Select玩家选择器
+      # 技巧提示：当你需要任何玩家都可以通过的判断，你可以直接关掉Select节点，这样其实就是不判断，同理。
       select:
+        # 是否开启，开启则进行判断，关闭则默认符合条件继续判断
         enable: true
+        # 限制玩家
         player:
+          # 关掉则不限制玩家
           enable: true
           config:
-            #type[portion， all, custom]
-            type: 'appoint'
+            # 填入你需要限制的玩家，在如下列表中的玩家死亡时，本判断才会通过
             info:
               - 'InkerXoe'
               - 'OishEternity'
+        # 限制权限
         perm:
+          # 关掉则不限制权限
           enable: true
           config:
-            #type[appoint, portion, custom]
+            #type[portion：info其中之一, all：info中全部权限均有]
             type: 'portion'
             info:
               - 'oish.eternity.perm'
               - 'oish.eternity.perms'
-        custom:
-          enable: false
-          type: 'js'
-          script: |-
-            print "Select Custom Script."
+      # Region玩家判断
       region:
+        # 开关 道理如上
         enable: true
+        # 判断世界
         world:
-          #type[portion, custom]
+          # 如上
           enable: true
-          type: 'portion'
           info:
             - 'world'
+        # 判断领地
         territory:
-          #type[portion, custom]
+          # 如上
           enable: true
-          type: 'portion'
-          adapter: 'gs'
+          # 这里也是使用标识名，应该用什么视你的领地插件定
+          adapter: 'gd'
           info:
             - 'test'
-        custom:
-          enable: false
-          type: 'js'
-          script: |-
-            print "Region Custom Script."
-    action:
+      # 顾名思义 和上面的Pre-Action一样，在这个判断之后 剩下的配置文件会根据权重选定
+      # 也是为了特殊需求，可以在这里再次判断
       main_action:
+        enable: true
         type: kether
         script: |-
           print "Post-Action."
+    # 下面就是Action节点了，有关掉落什么的都在这里控制
+    action:
       drop:
-        enable: true
-        type: ''
-        parameter: ''
-        custom:
-          enable: false
-          type: 'ke'
-          script: |-
-            print '111'
+        item:
+          enable: true
+          # ['百分比掉落: percentage' '范围掉落: range' '指定格掉落: slot' '指定数掉落: amount' '指定Material掉落: material' '指定Lore掉落: lore' '指定Nbt掉落: nbt' '全掉落: all' '不掉落: none']
+          type: 'percentage'
+          info: '50%'
+          protected:
+            enable: true
+            # ['slot: 制定物品格' 'material：指定材质' 'lore：指定lore' 'nbt：指定nbt']
+            info:
+              - 'slot<->0|1|2'
+              - 'lore<->OishEternity 测试Lore'
+              - 'nbt<->OishEternityTag:测试Tag'
+        exp:
+          enable: true
+          # ['百分比掉落: percentage' '范围掉落: range' '指定掉落: amount' '不掉落: none' '全掉落: all']
+          type: 'percentage'
+          didnt: 5
+          info: '50%'
+      # 死亡掉落物品
       relic:
         enable: true
-        type: ''
-        parameter: ''
-        custom:
-          enable: false
-          type: 'ke'
-          script: |-
-            print '111'
+        # ['normal', 'fancy', 'chest', 'redeem']
+        type: 'fancy'
+        info: ''
+        fancy_drop:
+          # 偏移量
+          offset:
+            # 横向偏移量(或随机最小偏移量-随机最大偏移量)
+            x: 0.1
+            # 纵向偏移量(或随机最小偏移量-随机最大偏移量)
+            y: 0.8
+          angle:
+            # 抛射类型(round/random)
+            type: round
+      # 赎回还是个饼
       redeem:
         enable: false
         type: ''
-        parameter: ''
-        custom:
-          enable: false
-          type: 'ke'
-          script: |-
-            print '111'
+        info: ''
+      # 重生点
+      spawn:
+        enable: true
+        # ['death:死亡点' 'coo：坐标' 'loc: 重生点']
+        type: death
+        info: world 1 1 1
+        auto_spawn:
+          enable: true
+          delay: 5
+
       post_action:
         type: kether
         script: |-
