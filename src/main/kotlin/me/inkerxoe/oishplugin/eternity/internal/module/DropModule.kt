@@ -24,14 +24,14 @@ import java.util.concurrent.ThreadLocalRandom
  */
 object DropModule {
     fun checkDropInv(config: Map<String, Any?>, player: Player): List<Int> {
-        if (config["enable"].cbool) return arrayListOf()
+        if (!config["enable"].cbool) return arrayListOf()
         val playerInventory = ToolsUtil.getInvItem(player.inventory)
         val protectedSlot: ArrayList<Int> = arrayListOf()
         // 获取保护格配置
         val protected = config["protected"].asMap()
-        val protectedConf = protected["info"]!!.asList()
+        val protectedConf = protected["info"]?.asList()
         if (protected["enable"].cbool) {
-            protectedConf.forEach { conf ->
+            protectedConf?.forEach { conf ->
                 val (key, value) = conf.split("<->")
                 when (key) {
                     "slot" -> {
@@ -75,17 +75,15 @@ object DropModule {
         when (dropType) {
             "percentage" -> {
                 // 百分比 -> 50%
-                dropSlot += setting.map { it.toString().parsePercent() }
-                    .map { percent -> newInventory.shuffled().take((newInventory.size * percent).toInt()) }
-                    .flatten().map { it.first }
+                val percent = setting.parsePercent()
+                val slotsToTake = (newInventory.size * percent).cint
+                dropSlot += newInventory.shuffled().take(slotsToTake).map { it.first }
             }
             "range" -> {
                 // 范围 -> 1..2
-                dropSlot += setting.flatMap { range ->
-                    val (setLeft, setRight) = range.toString().split("..").map { it.cint }
-                    val result = ThreadLocalRandom.current().nextInt(setLeft, setRight + 1)
-                    newInventory.shuffled().take(result).map { it.first }
-                }
+                val (setLeft, setRight) = setting.toString().split("..").map { it.cint }
+                val result = ThreadLocalRandom.current().nextInt(setLeft, setRight + 1)
+                dropSlot += newInventory.shuffled().take(result).map { it.first }
             }
             "slot" -> {
                 // 指定格 -> 1|2|3
@@ -95,9 +93,8 @@ object DropModule {
             }
             "amount" -> {
                 // 指定数
-                dropSlot += setting.flatMap { amount ->
-                    newInventory.shuffled().take(amount.cint).map { it.first }
-                }
+                dropSlot += newInventory.shuffled().take(setting.cint).map { it.first }
+
             }
             "material" -> {
                 // 指定Material

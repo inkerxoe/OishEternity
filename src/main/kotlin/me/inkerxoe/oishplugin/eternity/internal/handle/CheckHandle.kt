@@ -96,6 +96,8 @@ object CheckHandle {
         val checkedConfig = conf[confKey]!!
         ToolsUtil.debug("权重处理后列表 -> $checkedConfig")
         ToolsUtil.debug("-----=Check <-> ${checkedConfig.keys} <-> End=-----")
-        return checkedConfig
+        val hashMap = hashMapOf<String, Any>()
+        hashMap[confKey] = checkedConfig
+        return hashMap
     }
 }

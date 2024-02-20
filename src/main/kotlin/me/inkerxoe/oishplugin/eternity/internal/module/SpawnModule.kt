@@ -17,7 +17,9 @@ object SpawnModule {
     fun checkLocation(event: PlayerDeathEvent, config:  Map<String, Any?>): Location? {
         if (config["enable"].cbool) return null
         val type = config["type"].toString()
+        ToolsUtil.debug("type -> $type")
         val info = config["info"].toString()
+        ToolsUtil.debug("info -> $info")
         when (type) {
             "death" -> {
                 return event.entity.location

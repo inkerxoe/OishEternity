@@ -30,7 +30,6 @@ object ActionHandle {
         val set = config[key].asMap()
         val player = event.entity.player!!
 
-
         // 总配置
         val disposition = set["disposition"].asMap()
         // 动作逻辑配置
@@ -46,8 +45,12 @@ object ActionHandle {
         val dropInv = DropModule.checkDropInv(ite, player)
 
         val inv = player.inventory
+
+        val stack = dropInv.map { inv.getItem(it) }
+
         val itemStackInv: ArrayList<ItemStack> = arrayListOf()
         debug("剔除玩家背包物品 -> Run")
+        debug("dropInv -> $dropInv")
         dropInv.forEach { slot ->
             val item = player.inventory.getItem(slot)
             itemStackInv.add(item!!)
@@ -66,12 +69,14 @@ object ActionHandle {
         //获取relic
         val relic = action["relic"].asMap()
         if (dropInv.isNotEmpty())
-            RelicModule.runRelic(relic,player, dropInv.map { inv.getItem(it)!! })
+            RelicModule.runRelic(relic, player, stack)
 
         // 处理Redeem TODO
 
         // 处理 Spawn
         val spawn = action["spawn"].asMap()
+        ToolsUtil.debug("action -> ${config["action"]}")
+        ToolsUtil.debug("spawn -> $spawn")
         val loc = SpawnModule.checkLocation(event, spawn)
         if (spawn["enable"].cbool) {
             debug("最终获取的Location -> $loc")
