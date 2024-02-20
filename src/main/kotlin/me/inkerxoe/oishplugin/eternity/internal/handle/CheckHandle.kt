@@ -57,6 +57,7 @@ object CheckHandle {
             val preEnable = preAction["enable"].cbool
             if (preEnable) {
                 val result = ActionManager.runActionHandle(preAction, args)
+                ToolsUtil.debug("preAction -> $result")
                 if (!result) return@filter false
             }
             // pre-action 结束
@@ -64,23 +65,28 @@ object CheckHandle {
 
             // select config
             val select = check["select"].asMap()
-            if (!SelectModule.handle(select, player!!)) return@filter false
+            val selectResult = SelectModule.handle(select, player!!)
+            ToolsUtil.debug("select -> $selectResult")
+            if (!selectResult) return@filter false
 
             // region config
             val region = check["region"].asMap()
-            if (!RegionModule.handle(region, player)) return@filter false
+            val regionResult = RegionModule.handle(region, player)
+            ToolsUtil.debug("region -> $regionResult")
+            if (!regionResult) return@filter false
 
             // main-action 开始
             val mainAction = check["pre_action"].asMap()
             val mainEnable = preAction["enable"].cbool
             if (mainEnable) {
                 val result = ActionManager.runActionHandle(mainAction, args)
+                ToolsUtil.debug("mainAction -> $result")
                 if (!result) return@filter false
             }
             // main-action 结束
-
             return@filter true
         }
+        ToolsUtil.debug("原始列表 -> $map")
         if (map.isEmpty()) return  HashMap()
 
         val weightList = map.map { (_, value) -> value["weight"].cint }
@@ -88,6 +94,7 @@ object CheckHandle {
         val conf = map.filter { (_,value) -> value["weight"] == maxWeight }
         val confKey = conf.keys.first()
         val checkedConfig = conf[confKey]!!
+        ToolsUtil.debug("权重处理后列表 -> $checkedConfig")
         ToolsUtil.debug("-----=Check <-> ${checkedConfig.keys} <-> End=-----")
         return checkedConfig
     }

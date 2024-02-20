@@ -14,7 +14,7 @@ import taboolib.common.platform.function.console
  * @since 2024/2/19 上午11:23
  */
 object ActionManager {
-    fun runAction(type: String, script: String, args: HashMap<Any, Any>): Boolean {
+    private fun runAction(type: String, script: String, args: HashMap<Any, Any>): Boolean {
         ToolsUtil.debug("runAction")
         ToolsUtil.debug("type -> $type")
         when (type) {

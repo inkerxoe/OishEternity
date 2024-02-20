@@ -22,7 +22,7 @@ object RegionModule {
     fun handle(config: Map<String, Any?>, player: Player): Boolean {
         // region enable
         val enable = config["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
 
         // region world
         val region = config["world"].asMap()
@@ -37,7 +37,7 @@ object RegionModule {
 
     private fun regionWorld(map:  Map<String, Any?>, player: Player): Boolean {
         val enable = map["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
         val info = map["info"]!!.asList()
         val deathWorld = player.location.world!!.name
         if (deathWorld in info) return true
@@ -46,7 +46,7 @@ object RegionModule {
 
     private fun regionTerritory(map:  Map<String, Any?>, player: Player): Boolean {
         val enable = map["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
         val adapter = map["adapter"].toString()
         val info = map["info"]!!.asList()
         when (adapter) {

@@ -16,7 +16,7 @@ object SelectModule {
     fun handle(config: Map<String, Any?>, player: Player): Boolean {
         // select enable
         val enable = config["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
 
         // select player
         val playerConfig = config["player"].asMap()
@@ -31,7 +31,7 @@ object SelectModule {
 
     private fun selectPlayer(map:  Map<String, Any?>, player: Player): Boolean {
         val enable = map["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
         val conf = map["config"].asMap()
         val info = conf["info"]!!.asList()
         val display = player.name
@@ -41,7 +41,7 @@ object SelectModule {
 
     private fun selectPerm(map:  Map<String, Any?>, player: Player): Boolean {
         val enable = map["enable"].cbool
-        if (!enable) return false
+        if (!enable) return true
         val conf = map["config"].asMap()
         val type = conf["type"].toString()
         val info = conf["info"]!!.asList()

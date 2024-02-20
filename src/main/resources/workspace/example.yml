@@ -22,7 +22,7 @@ example:
         # 目前支持Kether和JavaScript
         # 标识名可在setting.yml 中改
         # 标识名的作用就是你可以简化书写，比如你配置了kether的标识名为ke 则此时type既可以填ke
-        type: kether
+        type: ke
         # 执行的脚本动作
         script: |-
           print "Pre-Action."
