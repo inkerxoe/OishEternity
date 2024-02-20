@@ -37,6 +37,7 @@ object ConfigManager {
 
     @Awake(LifeCycle.ENABLE)
     private fun loadConfigs(){
+        val start = ToolsUtil.timing()
         ToolsUtil.debug("loadConfig...")
         val yml = getAllFiles("workspace").filter {
             it.name.endsWith(".yml")
@@ -55,6 +56,7 @@ object ConfigManager {
             map[key] = secMap
             ToolsUtil.debug("loadConfig[$key] -> ${map[key]}")
         }
+        console().sendLang("Plugin-Config-Load", map.size, ToolsUtil.timing(start))
     }
 
     fun reload(){

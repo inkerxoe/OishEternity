@@ -15,3 +15,5 @@ Plugin-Hooker-False: '&8[&3Oish&bEternity&8] &b挂钩 &8| &6插件挂钩&c失败
 Plugin-Hooker-Not: '&8[&3Oish&bEternity&8] &b挂钩 &8| &6插件未挂钩 &7-> &f{0}, &6已自动跳过 Check Territory.'
 Plugin-Death-Info-Run: '&8[&3Oish&bEternity&8] &b信息 &8| &6监听到玩家{0}死亡 开始处理插件逻辑...'
 Plugin-Death-Info-End: '&8[&3Oish&bEternity&8] &b信息 &8| &6插件逻辑执行完毕! 耗时 &6{0} &fms'
+Plugin-Scrip-Load: '&8[&3Oish&bEternity&8] &b信息 &8| &6已成功从脚本空间中加载 &7{0} &6个脚本 耗时 &6{1} &fms'
+Plugin-Config-Load: '&8[&3Oish&bEternity&8] &b信息 &8| &6已成功从工作空间中加载 &7{0} &6个配置 耗时 &6{1} &fms'

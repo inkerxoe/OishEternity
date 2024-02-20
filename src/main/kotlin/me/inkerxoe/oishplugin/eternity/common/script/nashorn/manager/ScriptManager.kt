@@ -7,6 +7,8 @@ import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.Bukkit
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.function.console
+import taboolib.module.lang.sendLang
 import java.io.File
 
 /**
@@ -38,6 +40,7 @@ object ScriptManager {
      */
     @Awake(LifeCycle.ENABLE)
     private fun loadScripts() {
+        val start = ToolsUtil.timing()
         ToolsUtil.debug("loadScript...")
         for (file in getAllFiles("script")) {
             file.path.replace("plugins${File.separator}OishEternity${File.separator}scripts${File.separator}", "")
@@ -49,6 +52,7 @@ object ScriptManager {
                 error.printStackTrace()
             }
         }
+        console().sendLang("Plugin-Script-Load", compiledScripts.size, ToolsUtil.timing(start))
     }
 
     /**
