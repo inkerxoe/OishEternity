@@ -39,7 +39,7 @@ object RegionModule {
         val enable = map["enable"].cbool
         if (!enable) return false
         val info = map["info"]!!.asList()
-        val deathWorld = player.lastDeathLocation!!.world!!.name
+        val deathWorld = player.location.world!!.name
         if (deathWorld in info) return true
         return false
     }
