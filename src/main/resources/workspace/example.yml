@@ -109,6 +109,7 @@ example:
             x: 0.1
             # 纵向偏移量(或随机最小偏移量-随机最大偏移量)
             y: 0.8
+          delay: 3
           angle:
             # 抛射类型(round/random)
             type: round

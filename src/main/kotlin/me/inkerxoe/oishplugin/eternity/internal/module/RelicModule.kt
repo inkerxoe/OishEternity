@@ -1,5 +1,6 @@
 package me.inkerxoe.oishplugin.eternity.internal.module
 
+import me.inkerxoe.oishplugin.eternity.OishEternity
 import me.inkerxoe.oishplugin.eternity.OishEternity.plugin
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.entity.Player
@@ -22,10 +23,11 @@ object RelicModule {
         val type = config["type"].toString()
         ToolsUtil.debug("type -> $type")
         when (type) {
-            "drop" -> {
+            "normal" -> {
+                ToolsUtil.debug("Relic Type -> Normal")
+                val world = player.world
+                val loc = player.location
                 for (item in dropItem) {
-                    val world = player.world
-                    val loc = player.location
                     if (item.isNotAir())
                         world.dropItem(loc, item)
                 }
@@ -34,14 +36,20 @@ object RelicModule {
                 //TODO
             }
             "fancy" -> {
+                ToolsUtil.debug("Relic Type -> Fancy")
                 val loc = player.location
                 val fancy = config["fancy_drop"].asMap()
-                val offsetX = fancy["offsetX"].toString()
-                val offsetY = fancy["offsetY"].toString()
+                val offset = fancy["offset"].asMap()
+                val offsetX = offset["x"].toString()
+                ToolsUtil.debug("offsetX -> $offsetX")
+                val offsetY = offset["y"].toString()
+                ToolsUtil.debug("offsetY -> $offsetY")
                 val angle = fancy["angle"].asMap()
                 val angleType = angle["type"].toString()
+                ToolsUtil.debug("angleType -> $angleType")
                 val delayTicks = fancy["delay"].clong
-                ItemUtil.dropItems(plugin, dropItem.filterNotNull(), loc, offsetX, offsetY, angleType, delayTicks)
+                ToolsUtil.debug("delayTicks -> $delayTicks")
+                ItemUtil.dropItems(OishEternity.plugin, dropItem.filterNotNull(), loc, offsetX, offsetY, angleType, delayTicks)
             }
             "redeem" -> {
                 //TODO
