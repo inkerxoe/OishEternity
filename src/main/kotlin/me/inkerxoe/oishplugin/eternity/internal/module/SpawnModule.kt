@@ -15,7 +15,7 @@ import taboolib.common5.cbool
  */
 object SpawnModule {
     fun checkLocation(event: PlayerDeathEvent, config:  Map<String, Any?>): Location? {
-        if (config["enable"].cbool) return null
+        if (!config["enable"].cbool) return null
         val type = config["type"].toString()
         ToolsUtil.debug("type -> $type")
         val info = config["info"].toString()

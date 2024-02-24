@@ -75,8 +75,7 @@ object ActionHandle {
 
         // 处理 Spawn
         val spawn = action["spawn"].asMap()
-        ToolsUtil.debug("action -> ${config["action"]}")
-        ToolsUtil.debug("spawn -> $spawn")
+        debug("spawn -> $spawn")
         val loc = SpawnModule.checkLocation(event, spawn)
         if (spawn["enable"].cbool) {
             debug("最终获取的Location -> $loc")
