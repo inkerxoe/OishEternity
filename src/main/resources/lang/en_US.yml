@@ -1,0 +1,18 @@
+
+
+
+# Plugin-related
+
+Plugin-Loading: '&7Loading &3Oish&bEternity&8&f... &8{0}'
+Plugin-Enabled: '&8[&3Oish&bEternity&8] &bInfo &8| &6Plugin loaded.'
+Plugin-Disable: '&8[&3Oish&bEternity&8] &bInfo &8| &6Plugin unloaded.'
+Plugin-Reloaded: '&8[&3Oish&bEternity&8] &bInfo &8| &6Plugin reloaded.'
+Plugin-Debug: '&8[&3Oish&bEternity&8] &eDebug &8| &f{0}'
+Plugin-NullPlayer: '&8[&3Oish&bEternity&8] &bInfo &8| &6Target player does not exist.'
+Plugin-Hooker-True: '&8[&3Oish&bEternity&8] &bHook &8| &6Plugin hooked &asuccessfully &7-> &f{0}.'
+Plugin-Hooker-False: '&8[&3Oish&bEternity&8] &bHook &8| &6Plugin hook &cfailed &7-> &f{0}.'
+Plugin-Hooker-Not: '&8[&3Oish&bEternity&8] &bHook &8| &6Plugin not hooked &7-> &f{0}, &6automatically skip Check Territory.'
+Plugin-Death-Info-Run: '&8[&3Oish&bEternity&8] &bInfo &8| &6Monitor player {0} death start processing plugin logic...'
+Plugin-Death-Info-End: '&8[&3Oish&bEternity&8] &bInfo &8| &6Plugin logic finished! Took &6{0} &fms'
+Plugin-Script-Load: '&8[&3Oish&bEternity&8] &bInfo &8| &6Successfully loaded &7{0} &6scripts from script space in &6{1} &fms'
+Plugin-Config-Load: '&8[&3Oish&bEternity&8] &bInfo &8| &6Successfully loaded &7{0} &6configurations from workspace in &6{1} &fms'

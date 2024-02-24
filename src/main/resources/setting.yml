@@ -8,8 +8,8 @@ options:
     select:
       perm:
         type:
-          all: 'all' #拥有以下所有权限
-          portion: 'portion' #拥有以下任一权限
+          all: 'all'
+          portion: 'portion'
     region:
         adapter:
           residence: 'res'
