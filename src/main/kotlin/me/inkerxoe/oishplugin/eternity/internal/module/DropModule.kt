@@ -4,7 +4,9 @@ import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.debug
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.parsePercent
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.toMaterial
+import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.event.entity.PlayerDeathEvent
 import taboolib.common.util.asList
 import taboolib.common5.cbool
 import taboolib.common5.cfloat
@@ -23,6 +25,16 @@ import java.util.concurrent.ThreadLocalRandom
  * @since 2024/2/19 下午10:33
  */
 object DropModule {
+
+    fun runNormalDrop(event: PlayerDeathEvent) {
+        val player = event.entity.player!!
+        val inventory = player.inventory
+        val location = player.location
+        inventory.forEach { item ->
+            item.type = Material.AIR
+            location.world!!.dropItem(location, item)
+        }
+    }
     fun checkDropInv(config: Map<String, Any?>, player: Player): List<Int> {
         if (!config["enable"].cbool) return arrayListOf()
         val playerInventory = ToolsUtil.getInvItem(player.inventory)
@@ -61,11 +73,11 @@ object DropModule {
             protectedSlot.clear()
             protectedSlot.addAll(result)
         }
-        ToolsUtil.debug("获取到的保护格Slot列表 -> $protectedSlot")
+        debug("获取到的保护格Slot列表 -> $protectedSlot")
 
         // 处理玩家Inventory
         val newInventory = playerInventory.filterNot { (index, _) -> protectedSlot.contains(index) }
-        ToolsUtil.debug("获得处理后的玩家Slot列表 -> $newInventory")
+        debug("获得处理后的玩家Slot列表 -> $newInventory")
 
         // 处理玩家Drop列表
         val dropType = config["type"].toString()
@@ -130,7 +142,7 @@ object DropModule {
         val result = dropSlot.distinct().sortedDescending()
         dropSlot.clear()
         dropSlot.addAll(result)
-        ToolsUtil.debug("获取最终玩家掉落Slot列表 -> $dropSlot")
+        debug("获取最终玩家掉落Slot列表 -> $dropSlot")
         return dropSlot
     }
 

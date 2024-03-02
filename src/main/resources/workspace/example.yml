@@ -15,6 +15,7 @@ example:
   weight: 100
   # 主配置
   # Main configuration
+  only_normal: true
   disposition:
     # Check节点 负责根据玩家死亡信息来判断处玩家对应的配置
     # The Check node is responsible for judging the player's corresponding configuration based on the player's death information
