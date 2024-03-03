@@ -1,5 +1,6 @@
 package me.inkerxoe.oishplugin.eternity.utils
 
+import taboolib.common.platform.function.getDataFolder
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -16,7 +17,7 @@ import java.security.MessageDigest
 /**
  * 文件相关工具类
  */
-object FileUtils {
+object FileUtil {
     /**
      * 解析文件编码
      *

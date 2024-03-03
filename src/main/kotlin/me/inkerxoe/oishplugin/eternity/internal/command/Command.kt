@@ -3,6 +3,7 @@ package me.inkerxoe.oishplugin.eternity.internal.command
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.runActions
 import me.inkerxoe.oishplugin.eternity.common.script.kether.KetherUtil.toKetherScript
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager.ScriptManager
+import me.inkerxoe.oishplugin.eternity.internal.command.subcommand.Create
 import me.inkerxoe.oishplugin.eternity.internal.command.subcommand.Reload
 import me.inkerxoe.oishplugin.eternity.internal.manager.ConfigManager
 import me.inkerxoe.oishplugin.eternity.internal.module.ConfigModule
@@ -88,4 +89,7 @@ object Command {
 
     @CommandBody
     val reload = Reload.reload
+
+    @CommandBody
+    val create = Create.create
 }

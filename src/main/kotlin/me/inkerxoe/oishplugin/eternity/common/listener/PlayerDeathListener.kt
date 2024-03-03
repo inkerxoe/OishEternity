@@ -37,23 +37,30 @@ object PlayerDeathListener {
         val checkedConfig = CheckHandle.check(event)
         if (checkedConfig.isEmpty()) {
             ToolsUtil.debug("很可惜，玩家${event.entity.player}不存在可行配置.")
+            val key = checkedConfig.keys.first()
+            val set = checkedConfig[key].asMap()
+            val onlyEnable = set["only_normal"].cbool
+            ToolsUtil.debug("是否开启仅原版 -> $onlyEnable")
+            if (onlyEnable) {
+                DropModule.runNormalDrop(event)
+            } else {
+                // 设置世界死亡掉落
+                ToolsUtil.setKeep(event, false)
+            }
+            val time = ToolsUtil.timing(startTime)
+            if (ConfigModule.options_death_info) {
+                console().sendLang("Plugin-Death-Info-End", time)
+            } else {
+                ToolsUtil.debug("插件逻辑执行完毕! 耗时 &6${time} &fms")
+            }
         } else {
             ActionHandle.action(event, checkedConfig)
-        }
-        val key = checkedConfig.keys.first()
-        val set = checkedConfig[key].asMap()
-        val onlyEnable = set["only_normal"].cbool
-        if (onlyEnable) {
-            DropModule.runNormalDrop(event)
-        } else {
-            // 设置世界死亡掉落
-            ToolsUtil.setKeep(event, false)
-        }
-        val time = ToolsUtil.timing(startTime)
-        if (ConfigModule.options_death_info) {
-            console().sendLang("Plugin-Death-Info-End", time)
-        } else {
-            ToolsUtil.debug("插件逻辑执行完毕! 耗时 &6${time} &fms")
+            val time = ToolsUtil.timing(startTime)
+            if (ConfigModule.options_death_info) {
+                console().sendLang("Plugin-Death-Info-End", time)
+            } else {
+                ToolsUtil.debug("插件逻辑执行完毕! 耗时 &6${time} &fms")
+            }
         }
     }
 }

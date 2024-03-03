@@ -1,8 +1,8 @@
 package me.inkerxoe.oishplugin.eternity.internal.module
 
 import me.inkerxoe.oishplugin.eternity.OishEternity
-import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils
-import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils.saveResourceNotWarn
+import me.inkerxoe.oishplugin.eternity.utils.ConfigUtil
+import me.inkerxoe.oishplugin.eternity.utils.ConfigUtil.saveResourceNotWarn
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.configuration.ConfigurationSection
 import taboolib.common.LifeCycle
@@ -42,10 +42,10 @@ object ConfigModule {
 
     @Awake(LifeCycle.INIT)
     fun saveResource() {
-        if (ConfigUtils.getFileOrNull("workspace") == null) {
+        if (ConfigUtil.getFileOrNull("workspace") == null) {
             OishEternity.plugin.saveResourceNotWarn("workspace${File.separator}example.yml")
         }
-        if (ConfigUtils.getFileOrNull("script") == null) {
+        if (ConfigUtil.getFileOrNull("script") == null) {
             OishEternity.plugin.saveResourceNotWarn("script${File.separator}example.js")
         }
     }

@@ -2,8 +2,8 @@ package me.inkerxoe.oishplugin.eternity.utils
 
 import me.inkerxoe.oishplugin.eternity.OishEternity
 import me.inkerxoe.oishplugin.eternity.OishEternity.plugin
-import me.inkerxoe.oishplugin.eternity.utils.FileUtils.createDirectory
-import me.inkerxoe.oishplugin.eternity.utils.FileUtils.createFile
+import me.inkerxoe.oishplugin.eternity.utils.FileUtil.createDirectory
+import me.inkerxoe.oishplugin.eternity.utils.FileUtil.createFile
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.Plugin
@@ -22,7 +22,7 @@ import java.io.OutputStream
 /**
  * 配置文件相关工具类
  */
-object ConfigUtils {
+object ConfigUtil {
     /**
      * 获取文件夹内所有文件
      *

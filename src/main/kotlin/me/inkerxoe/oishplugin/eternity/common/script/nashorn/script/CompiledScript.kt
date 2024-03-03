@@ -1,7 +1,7 @@
 package me.inkerxoe.oishplugin.eternity.common.script.nashorn.script
 
 import me.inkerxoe.oishplugin.eternity.internal.manager.HookerManager.nashornHooker
-import me.inkerxoe.oishplugin.eternity.utils.FileUtils
+import me.inkerxoe.oishplugin.eternity.utils.FileUtil
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
@@ -50,7 +50,7 @@ open class CompiledScript {
         scriptEngine = nashornHooker.getNashornEngine()
         loadLib()
         val input = FileInputStream(file)
-        val reader = InputStreamReader(input, FileUtils.charset(file))
+        val reader = InputStreamReader(input, FileUtil.charset(file))
         compiledScript = nashornHooker.compile(scriptEngine, reader)
         input.close()
         reader.close()

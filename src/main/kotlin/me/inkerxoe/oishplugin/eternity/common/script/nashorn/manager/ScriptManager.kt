@@ -2,7 +2,7 @@ package me.inkerxoe.oishplugin.eternity.common.script.nashorn.manager
 
 import me.inkerxoe.oishplugin.eternity.common.script.nashorn.script.CompiledScript
 import me.inkerxoe.oishplugin.eternity.internal.manager.HookerManager.nashornHooker
-import me.inkerxoe.oishplugin.eternity.utils.ConfigUtils.getAllFiles
+import me.inkerxoe.oishplugin.eternity.utils.ConfigUtil.getAllFiles
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import org.bukkit.Bukkit
 import taboolib.common.LifeCycle

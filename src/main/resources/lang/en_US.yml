@@ -16,3 +16,10 @@ Plugin-Death-Info-Run: '&8[&3Oish&bEternity&8] &bInfo &8| &6Monitor player {0} d
 Plugin-Death-Info-End: '&8[&3Oish&bEternity&8] &bInfo &8| &6Plugin logic finished! Took &6{0} &fms'
 Plugin-Script-Load: '&8[&3Oish&bEternity&8] &bInfo &8| &6Successfully loaded &7{0} &6scripts from script space in &6{1} &fms'
 Plugin-Config-Load: '&8[&3Oish&bEternity&8] &bInfo &8| &6Successfully loaded &7{0} &6configurations from workspace in &6{1} &fms'
+
+
+
+# 指令相关
+
+Command-Create-True: '&8[&3Oish&bEternity&8] &binfo &8| &6 Creation &a Success &6.'
+Command-Create-False: '&8[&3Oish&bEternity&8] &binfo &8| &6 Failed to create &c&7-> &f{0}.'
