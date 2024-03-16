@@ -27,7 +27,7 @@ taboolib {
             name("GriefDefender").with("bukkit").optional(true)
             name("WorldGuard").with("bukkit").optional(true)
         }
-        desc("Provide a flexible and powerful death punishment system for the Minecraft Bukkit server")
+        desc("Provide a flexible and powerful death punishment system for the Minecraft Bukkit Server")
     }
     version { taboolib = "6.1.0" }
 }
