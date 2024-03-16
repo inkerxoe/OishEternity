@@ -35,6 +35,8 @@ object ConfigModule {
         get() = OishEternity.setting.getString("options.identifiers.region.territory.adapter.world_guard")
     val options_death_info
         get() = OishEternity.setting.getBoolean("options.death_info", true)
+    val options_only_normal
+        get() = OishEternity.setting.getBoolean("options.only_normal")
 
 
 

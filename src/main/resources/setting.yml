@@ -1,6 +1,7 @@
 options:
   debug: false
   death_info: true
+  only_normal: true
   identifiers:
     script:
       javascript: 'js' # JavaScript
