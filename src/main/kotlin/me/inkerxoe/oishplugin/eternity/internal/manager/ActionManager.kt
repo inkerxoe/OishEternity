@@ -14,25 +14,29 @@ import taboolib.common.platform.function.console
  * @since 2024/2/19 上午11:23
  */
 object ActionManager {
+    fun runActionHandle(actionConfig: Map<String, Any?>, args: HashMap<Any, Any>): Boolean {
+        val type = actionConfig["type"]?.toString() ?: return false.also {
+            ToolsUtil.debug("ActionManager - Missing 'type' in action configuration.")
+        }
+        val script = actionConfig["script"]?.toString() ?: return false.also {
+            ToolsUtil.debug("ActionManager - Missing 'script' in action configuration.")
+        }
+        return runAction(type, script, args)
+    }
+
     private fun runAction(type: String, script: String, args: HashMap<Any, Any>): Boolean {
-        ToolsUtil.debug("runAction")
-        ToolsUtil.debug("type -> $type")
-        when (type) {
+        return when (type) {
             ConfigModule.options_identifiers_script_KETHER -> {
-                return ScriptModule.runActionKe(script, args)
+                ToolsUtil.debug("Running Kether script action.")
+                ScriptModule.runActionKe(script, args)
             }
             ConfigModule.options_identifiers_script_JAVASCRIPT -> {
-                return ScriptModule.runActionJs(script, args)
+                ToolsUtil.debug("Running JavaScript script action.")
+                ScriptModule.runActionJs(script, args)
+            }
+            else -> false.also {
+                ToolsUtil.debug("Unsupported action type: $type")
             }
         }
-        return false
-    }
-    fun runActionHandle(actionConfig: Map<String, Any?>, args: HashMap<Any, Any>): Boolean {
-        val type = actionConfig["type"].toString()
-        ToolsUtil.debug("set action.type to $type")
-        val script = actionConfig["script"].toString()
-        ToolsUtil.debug("set action.script to $script")
-        ToolsUtil.debug("args -> $args")
-        return ActionManager.runAction(type, script, args)
     }
 }

@@ -37,7 +37,6 @@ object PlayerDeathListener {
         val checkedConfig = CheckHandle.check(event)
         if (checkedConfig.isEmpty()) {
             ToolsUtil.debug("很可惜，玩家${event.entity.player}不存在可行配置.")
-            val key = checkedConfig.keys.first()
             val onlyEnable = ConfigModule.options_only_normal
             ToolsUtil.debug("是否开启仅原版 -> $onlyEnable")
             if (onlyEnable) {
