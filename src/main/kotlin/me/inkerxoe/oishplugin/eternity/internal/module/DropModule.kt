@@ -75,8 +75,47 @@ object DropModule {
         }
         debug("获取到的保护格Slot列表 -> $protectedSlot")
 
+        // 强制掉落逻辑
+        val enforcedSlot: ArrayList<Int> = arrayListOf()
+        val enforced = config["enforced"].asMap()
+        val enforcedConf = protected["info"]?.asList()
+        if (enforced["enable"].cbool) {
+            enforcedConf?.forEach { conf ->
+                val (key, value) = conf.split("<->")
+                when (key) {
+                    "slot" -> {
+                        enforcedSlot += value.split('|').map(String::cint)
+                            .filter { playerInventory.map { i -> i.first }.contains(it) }
+                    }
+                    "material" -> {
+                        val material = value.toMaterial()
+                        enforcedSlot += playerInventory
+                            .filter { (_, item) -> item.type == material }
+                            .map { (index, _) -> index }
+                    }
+                    "lore" -> {
+                        enforcedSlot += playerInventory
+                            .filter { (_, item) -> item.hasLore(value) }
+                            .map { (index, _) -> index }
+                    }
+                    "nbt" -> {
+                        val (k, v) = value.split(":")
+                        enforcedSlot += playerInventory
+                            .filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }
+                            .map { (index, _) -> index }
+                    }
+                }
+            }
+            val result = enforcedSlot.distinct().sortedDescending()
+            enforcedSlot.clear()
+            enforcedSlot.addAll(result)
+        }
+        debug("获取到的强制掉落Slot列表 -> $enforcedSlot")
+
+
         // 处理玩家Inventory
-        val newInventory = playerInventory.filterNot { (index, _) -> protectedSlot.contains(index) }
+        val newPreInventory = playerInventory.filterNot { (index, _) -> protectedSlot.contains(index) }
+        val newInventory = newPreInventory.filterNot { (index, _) -> enforcedSlot.contains(index) }
         debug("获得处理后的玩家Slot列表 -> $newInventory")
 
         // 处理玩家Drop列表
@@ -142,6 +181,7 @@ object DropModule {
         val result = dropSlot.distinct().sortedDescending()
         dropSlot.clear()
         dropSlot.addAll(result)
+        dropSlot.addAll(enforcedSlot)
         debug("获取最终玩家掉落Slot列表 -> $dropSlot")
         return dropSlot
     }

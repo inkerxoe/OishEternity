@@ -118,14 +118,26 @@ example:
           # ['Percentage Drop: Percentage' 'Range Drop: Range' 'Target Grid Drop: Slot' 'Target Number Drop: Amount' 'Target Material Drop: material' 'Target Lore Drop: lore' 'Target Nbt Drop: nbt' 'All Drop: All' 'No Drop: None']
           type: 'percentage'
           info: '50%'
+          # 优先执行保护格还是强制掉落
+          priority: 'protected'
+          # 保护格
           protected:
             enable: true
             # ['slot: 制定物品格' 'material：指定材质' 'lore：指定lore' 'nbt：指定nbt']
             # ['slot: specify item compartment' 'material:specify material' 'lore:specify lore' 'nbt:specify nbt']
             info:
               - 'slot<->0|1|2'
-              - 'lore<->OishEternity 测试Lore'
-              - 'nbt<->OishEternityTag:测试Tag'
+              - 'lore<->OishEternity 测试Lore-本物品不掉'
+              - 'nbt<->OishEternityTag:测试Tag-本物品必不掉'
+          # 强制掉落
+          enforced:
+            enable: true
+            # ['slot: 制定物品格' 'material：指定材质' 'lore：指定lore' 'nbt：指定nbt']
+            # ['slot: specify item compartment' 'material:specify material' 'lore:specify lore' 'nbt:specify nbt']
+            info:
+              - 'slot<->4|5|6'
+              - 'lore<->OishEternity 测试Lore-本物品必掉'
+              - 'nbt<->OishEternityTag:测试Tag-本物品必掉'
         exp:
           enable: true
           # ['百分比掉落: percentage' '范围掉落: range' '指定掉落: amount' '不掉落: none' '全掉落: all']
@@ -154,11 +166,11 @@ example:
             # 抛射类型(round/random)
             # Projectile Type (Round/Random)
             type: round
-      # 赎回还是个饼
-      redeem:
-        enable: false
-        type: ''
-        info: ''
+        # 赎回还是个饼
+        redeem:
+          # ['command', 'gui']
+          type: 'command'
+          info: ''
       # 重生点
       # Spawn Point
       spawn:
