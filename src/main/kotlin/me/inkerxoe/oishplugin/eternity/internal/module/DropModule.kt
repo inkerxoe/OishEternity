@@ -30,160 +30,84 @@ object DropModule {
         val player = event.entity.player!!
         val inventory = player.inventory
         val location = player.location
-        inventory.forEach { item ->
-            item.type = Material.AIR
-            location.world!!.dropItem(location, item)
+
+        if (!event.keepInventory) {
+            inventory.forEach { item ->
+                location.world!!.dropItem(location, item)
+                item?.type = Material.AIR
+            }
         }
     }
     fun checkDropInv(config: Map<String, Any?>, player: Player): List<Int> {
-        if (!config["enable"].cbool) return arrayListOf()
-        val playerInventory = ToolsUtil.getInvItem(player.inventory)
-        val protectedSlot: ArrayList<Int> = arrayListOf()
-        // 获取保护格配置
-        val protected = config["protected"].asMap()
-        val protectedConf = protected["info"]?.asList()
-        if (protected["enable"].cbool) {
-            protectedConf?.forEach { conf ->
+        if (!config["enable"].cbool) return emptyList()
+        val playerInventoryItems = ToolsUtil.getInvItem(player.inventory)
+        val playerInventoryIndices = playerInventoryItems.map { it.first }.toSet()
+        val protectedSlot: MutableSet<Int> = mutableSetOf()
+        val enforcedSlot: MutableSet<Int> = mutableSetOf()
+
+        // 处理配置中的protected和enforced部分
+        fun processConfigSection(section: Map<String, Any?>, slotSet: MutableSet<Int>) {
+            section["info"]?.asList()?.takeIf { section["enable"].cbool }?.forEach { conf ->
                 val (key, value) = conf.split("<->")
-                when (key) {
-                    "slot" -> {
-                        protectedSlot += value.split('|').map(String::cint)
-                            .filter { playerInventory.map { i -> i.first }.contains(it) }
-                    }
-                    "material" -> {
-                        val material = value.toMaterial()
-                        protectedSlot += playerInventory
-                            .filter { (_, item) -> item.type == material }
-                            .map { (index, _) -> index }
-                    }
-                    "lore" -> {
-                        protectedSlot += playerInventory
-                            .filter { (_, item) -> item.hasLore(value) }
-                            .map { (index, _) -> index }
-                    }
+                slotSet += when (key) {
+                    "slot" -> value.split('|').map(String::cint).filter { it in playerInventoryIndices }
+                    "material" -> playerInventoryItems.filter { (_, item) -> item.type == value.toMaterial() }.map { (index, _) -> index }
+                    "lore" -> playerInventoryItems.filter { (_, item) -> item.hasLore(value) }.map { (index, _) -> index }
                     "nbt" -> {
                         val (k, v) = value.split(":")
-                        protectedSlot += playerInventory
-                            .filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }
-                            .map { (index, _) -> index }
+                        playerInventoryItems.filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }.map { (index, _) -> index }
                     }
+                    else -> emptyList()
                 }
             }
-            val result = protectedSlot.distinct().sortedDescending()
-            protectedSlot.clear()
-            protectedSlot.addAll(result)
         }
-        debug("获取到的保护格Slot列表 -> $protectedSlot")
 
-        // 强制掉落逻辑
-        val enforcedSlot: ArrayList<Int> = arrayListOf()
-        val enforced = config["enforced"].asMap()
-        val enforcedConf = protected["info"]?.asList()
-        if (enforced["enable"].cbool) {
-            enforcedConf?.forEach { conf ->
-                val (key, value) = conf.split("<->")
-                when (key) {
-                    "slot" -> {
-                        enforcedSlot += value.split('|').map(String::cint)
-                            .filter { playerInventory.map { i -> i.first }.contains(it) }
-                    }
-                    "material" -> {
-                        val material = value.toMaterial()
-                        enforcedSlot += playerInventory
-                            .filter { (_, item) -> item.type == material }
-                            .map { (index, _) -> index }
-                    }
-                    "lore" -> {
-                        enforcedSlot += playerInventory
-                            .filter { (_, item) -> item.hasLore(value) }
-                            .map { (index, _) -> index }
-                    }
-                    "nbt" -> {
-                        val (k, v) = value.split(":")
-                        enforcedSlot += playerInventory
-                            .filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }
-                            .map { (index, _) -> index }
-                    }
+        // 初始化protectedSlot和enforcedSlot
+        processConfigSection(config["protected"].asMap(), protectedSlot)
+        processConfigSection(config["enforced"].asMap(), enforcedSlot)
+
+        // 根据优先级处理重合部分
+        if (config["priority"].toString() == "protected") {
+            enforcedSlot.removeAll(protectedSlot)
+        } else {
+            protectedSlot.removeAll(enforcedSlot)
+        }
+
+        val finalDropSlots: MutableSet<Int> = mutableSetOf()
+
+        // 根据drop type确定掉落的slots
+        config["type"]?.toString()?.let { dropType ->
+            val setting = config["info"].toString()
+            val remainingInventory = playerInventoryItems.filterNot { (index, _) -> index in protectedSlot || index in enforcedSlot }
+
+            finalDropSlots += when (dropType) {
+                "percentage" -> {
+                    val percent = setting.parsePercent()
+                    remainingInventory.shuffled().take((remainingInventory.size * percent).toInt()).map { it.first }.toSet()
                 }
-            }
-            val result = enforcedSlot.distinct().sortedDescending()
-            enforcedSlot.clear()
-            enforcedSlot.addAll(result)
-        }
-        debug("获取到的强制掉落Slot列表 -> $enforcedSlot")
-
-
-        // 处理玩家Inventory
-        val newPreInventory = playerInventory.filterNot { (index, _) -> protectedSlot.contains(index) }
-        val newInventory = newPreInventory.filterNot { (index, _) -> enforcedSlot.contains(index) }
-        debug("获得处理后的玩家Slot列表 -> $newInventory")
-
-        // 处理玩家Drop列表
-        val dropType = config["type"].toString()
-        val setting = config["info"].toString()
-        val dropSlot: ArrayList<Int> = arrayListOf()
-
-        when (dropType) {
-            "percentage" -> {
-                // 百分比 -> 50%
-                val percent = setting.parsePercent()
-                val slotsToTake = (newInventory.size * percent).cint
-                dropSlot += newInventory.shuffled().take(slotsToTake).map { it.first }
-            }
-            "range" -> {
-                // 范围 -> 1..2
-                val (setLeft, setRight) = setting.toString().split("..").map { it.cint }
-                val result = ThreadLocalRandom.current().nextInt(setLeft, setRight + 1)
-                dropSlot += newInventory.shuffled().take(result).map { it.first }
-            }
-            "slot" -> {
-                // 指定格 -> 1|2|3
-                dropSlot += setting.split('|').map(String::cint).mapNotNull { slotIndex ->
-                    newInventory.find { it.first == slotIndex.cint }?.first
+                "range" -> {
+                    val (min, max) = setting.split("..").map(String::toInt)
+                    remainingInventory.shuffled().take((min..max).random()).map { it.first }.toSet()
                 }
+                "slot" -> setting.split('|').map(String::toInt).filter { it in playerInventoryIndices }.toSet()
+                "material" -> remainingInventory.filter { (_, item) -> item.type.toString() in setting.split('|') }.map { it.first }.toSet()
+                "lore" -> remainingInventory.filter { (_, item) -> item.hasLore(setting) }.map { it.first }.toSet()
+                "nbt" -> {
+                    val (k, v) = setting.split(":")
+                    remainingInventory.filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }.map { it.first }.toSet()
+                }
+                "all" -> remainingInventory.map { it.first }.toSet()
+                "none" -> emptySet<Int>()
+                else -> throw IllegalArgumentException("Unknown drop type: $dropType")
             }
-            "amount" -> {
-                // 指定数
-                dropSlot += newInventory.shuffled().take(setting.cint).map { it.first }
-
-            }
-            "material" -> {
-                // 指定Material
-                val material = setting.split('|').map { it.toMaterial() }
-                dropSlot += newInventory
-                    .filter { (_, item) -> item.type in material }
-                    .map { (index, _) -> index }
-            }
-            "lore" -> {
-                // 指定Lore
-                dropSlot += newInventory
-                    .filter { (_, item) -> item.hasLore(setting) }
-                    .map { (index, _) -> index }
-            }
-            "nbt" -> {
-                // 指定Nbt
-                val (k, v) = setting.split(":")
-                dropSlot += newInventory
-                    .filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }
-                    .map { (index, _) -> index }
-            }
-            "all" -> {
-                // 全掉落
-                dropSlot += newInventory.map { it.first }
-            }
-            "none" -> {
-                // 不掉落
-                // 宝 你在看什么？
-                dropSlot += arrayListOf()
-            }
-            else -> throw IllegalArgumentException("Invalid drop type")
         }
-        val result = dropSlot.distinct().sortedDescending()
-        dropSlot.clear()
-        dropSlot.addAll(result)
-        dropSlot.addAll(enforcedSlot)
-        debug("获取最终玩家掉落Slot列表 -> $dropSlot")
-        return dropSlot
+
+        // 如果enforced优先级高，则确保enforcedSlot中的items被添加到最终掉落中
+        if (config["priority"].toString() == "enforced") {
+            finalDropSlots += enforcedSlot
+        }
+
+        return finalDropSlots.sortedDescending()
     }
 
     fun checkDropExp(config: Map<String, Any?>, player: Player): Int {

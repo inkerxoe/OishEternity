@@ -31,6 +31,11 @@ object PlayerDeathListener {
             ToolsUtil.debug("监听到玩家${event.entity.player!!.name}死亡 开始处理插件逻辑...")
         }
         val startTime = ToolsUtil.timing()
+        // 获取世界状态
+        val keepInventory = event.entity.world.getGameRuleValue(GameRule.KEEP_INVENTORY)
+        val eventInv = event.keepInventory
+        val eventExp = event.keepLevel
+
         // 设置世界死亡不掉落
         ToolsUtil.setKeep(event, true)
         // 获取对应配置
@@ -43,7 +48,12 @@ object PlayerDeathListener {
                 DropModule.runNormalDrop(event)
             } else {
                 // 设置世界死亡掉落
-                ToolsUtil.setKeep(event, false)
+                if (keepInventory == false) {
+                    ToolsUtil.setKeep(event, false)
+                } else if (keepInventory == null) {
+                    event.keepLevel = eventExp
+                    event.keepInventory = eventInv
+                }
             }
             val time = ToolsUtil.timing(startTime)
             if (ConfigModule.options_death_info) {

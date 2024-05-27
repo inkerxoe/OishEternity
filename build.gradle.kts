@@ -1,3 +1,4 @@
+
 import io.izzel.taboolib.gradle.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -36,6 +37,7 @@ repositories {
     mavenCentral()
     maven("https://repo.glaremasters.me/repository/bloodshot")
     maven("https://maven.enginehub.org/repo/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 }
 
 dependencies {
