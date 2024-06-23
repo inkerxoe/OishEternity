@@ -32,9 +32,16 @@ object PlayerDeathListener {
         }
         val startTime = ToolsUtil.timing()
         // 获取世界状态
-        val keepInventory = event.entity.world.getGameRuleValue(GameRule.KEEP_INVENTORY)
+        // 1.13以下没有这个方法 手动null
+        val keepInventory: Boolean?
+        keepInventory = try {
+            event.entity.world.getGameRuleValue(GameRule.KEEP_INVENTORY)
+        } catch (err: NoClassDefFoundError) {
+            null
+        }
         val eventInv = event.keepInventory
         val eventExp = event.keepLevel
+
 
         // 设置世界死亡不掉落
         ToolsUtil.setKeep(event, true)

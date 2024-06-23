@@ -28,6 +28,7 @@ object ActionHandle {
         debug("-----=Action <-> ${config.keys.first()} <-> Start=-----")
         val key = config.keys.first()
         val set = config[key].asMap()
+
         val player = event.entity.player!!
 
         // 总配置
