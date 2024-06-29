@@ -4,6 +4,7 @@ import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.debug
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.parsePercent
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil.toMaterial
+import org.apache.commons.lang.mutable.MutableInt
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.PlayerDeathEvent
@@ -52,7 +53,9 @@ object DropModule {
                 slotSet += when (key) {
                     "slot" -> value.split('|').map(String::cint).filter { it in playerInventoryIndices }
                     "material" -> playerInventoryItems.filter { (_, item) -> item.type == value.toMaterial() }.map { (index, _) -> index }
-                    "lore" -> playerInventoryItems.filter { (_, item) -> item.hasLore(value) }.map { (index, _) -> index }
+                    "lore" -> playerInventoryItems.filter {
+                        (_, item) -> item.hasLore(value) }.map { (index, _) -> index
+                        }
                     "nbt" -> {
                         val (k, v) = value.split(":")
                         playerInventoryItems.filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }.map { (index, _) -> index }
@@ -65,6 +68,11 @@ object DropModule {
         // 初始化protectedSlot和enforcedSlot
         processConfigSection(config["protected"].asMap(), protectedSlot)
         processConfigSection(config["enforced"].asMap(), enforcedSlot)
+
+        debug {
+            debug("处理完的保护位: $protectedSlot")
+            debug("处理完的必掉位: $enforcedSlot")
+        }
 
         // 根据优先级处理重合部分
         if (config["priority"].toString() == "protected") {
@@ -97,16 +105,17 @@ object DropModule {
                     remainingInventory.filter { (_, item) -> item.getItemTag()[k] == ItemTagData(v) }.map { it.first }.toSet()
                 }
                 "all" -> remainingInventory.map { it.first }.toSet()
-                "none" -> emptySet<Int>()
+                "none" -> emptySet()
                 else -> throw IllegalArgumentException("Unknown drop type: $dropType")
             }
         }
 
         // 如果enforced优先级高，则确保enforcedSlot中的items被添加到最终掉落中
-        if (config["priority"].toString() == "enforced") {
-            finalDropSlots += enforcedSlot
-        }
-
+        // 2024/6/24 注释掉， 你上面已经判断过了，为啥还要判断
+//        if (config["priority"].toString() == "enforced") {
+//            finalDropSlots += enforcedSlot
+//        }
+        finalDropSlots += enforcedSlot
         return finalDropSlots.sortedDescending()
     }
 

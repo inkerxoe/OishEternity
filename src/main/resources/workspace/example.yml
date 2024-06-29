@@ -41,6 +41,13 @@ example:
         # Script actions executed
         script: |-
           print "Pre-Action."
+      # 是否开启必须被玩家杀死
+      KillerMustBePlayer: true
+      # playerKilledReason玩家被杀死的原因
+      # 原因大全: https://bukkit.windit.net/javadoc/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html#ENTITY_ATTACK
+      # playerKilledReason Player was killed reason
+      # Reasons: https://bukkit.windit.net/javadoc/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html#ENTITY_ATTACK
+      playerKilledReason: "ENTITY_ATTACK"
       # Select玩家选择器
       # 技巧提示：当你需要任何玩家都可以通过的判断，你可以直接关掉Select节点，这样其实就是不判断，同理。
       # Select player selector

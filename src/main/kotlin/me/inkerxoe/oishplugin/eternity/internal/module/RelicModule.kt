@@ -49,7 +49,7 @@ object RelicModule {
                 ToolsUtil.debug("angleType -> $angleType")
                 val delayTicks = fancy["delay"].clong
                 ToolsUtil.debug("delayTicks -> $delayTicks")
-                ItemUtil.dropItems(OishEternity.plugin, dropItem.filterNotNull(), loc, offsetX, offsetY, angleType, delayTicks)
+                ItemUtil.dropItems(plugin, dropItem.filterNotNull(), loc, offsetX, offsetY, angleType, delayTicks)
             }
             "redeem" -> {
                 //TODO

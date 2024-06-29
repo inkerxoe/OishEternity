@@ -5,6 +5,7 @@ import me.inkerxoe.oishplugin.eternity.internal.manager.ConfigManager
 import me.inkerxoe.oishplugin.eternity.internal.module.RegionModule
 import me.inkerxoe.oishplugin.eternity.internal.module.SelectModule
 import me.inkerxoe.oishplugin.eternity.utils.ToolsUtil
+import org.bukkit.entity.Player
 import org.bukkit.event.entity.PlayerDeathEvent
 import taboolib.common5.cbool
 import taboolib.common5.cint
@@ -45,6 +46,7 @@ object CheckHandle {
         args["location"] = event.entity.location
         args["killer"] = event.killer?: "null"
 
+
         val map = ConfigManager.map.filter { (key, value) ->
             ToolsUtil.debug("-----=Check <-> $key <-> Start=-----")
             // 总配置
@@ -62,6 +64,22 @@ object CheckHandle {
             }
             // pre-action 结束
             val player = event.entity.player
+
+            //KillerMustBePlayer
+            val killerMustBePlayer = check["KillerMustBePlayer"].cbool
+            if (killerMustBePlayer){
+                if(event.killer !is Player) return@filter false
+            }
+
+            //PlayerKilledReason
+            val playerDeathReason = check["playerKilledReason"]
+            playerDeathReason?.let { reason ->
+                event.entity.lastDamageCause?.cause?.name?.let {
+                    if (it != reason.toString()) {
+                        return@filter false
+                    }
+                }
+            }
 
             // select config
             val select = check["select"].asMap()

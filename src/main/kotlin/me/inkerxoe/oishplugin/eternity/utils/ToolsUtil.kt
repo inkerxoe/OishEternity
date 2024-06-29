@@ -34,6 +34,12 @@ object ToolsUtil {
         }
     }
 
+    fun debug(a: () -> Unit) {
+        if (ConfigModule.options_debug) {
+            a.invoke()
+        }
+    }
+
     fun timing(): Long {
         return System.nanoTime()
     }
