@@ -42,7 +42,12 @@ example:
         script: |-
           print "Pre-Action."
       # 是否开启必须被玩家杀死
-      KillerMustBePlayer: true
+      killerMustBePlayer: true
+      # 是否开启被玩家杀死时等级差距过大取消掉落
+      dropRestrictionByLevelGap:
+        enable: false
+        # 经验差距阈值【填负数就是比自己被经验小到一定值的人杀死不掉落】 阈值为5时 当击杀者比被击杀者经验多了5及以上 取消被击杀者死亡掉落
+        info: 5
       # playerKilledReason玩家被杀死的原因
       # 原因大全: https://bukkit.windit.net/javadoc/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html#ENTITY_ATTACK
       # playerKilledReason Player was killed reason

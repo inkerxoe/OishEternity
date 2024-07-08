@@ -110,17 +110,13 @@ object DropModule {
             }
         }
 
-        // 如果enforced优先级高，则确保enforcedSlot中的items被添加到最终掉落中
-        // 2024/6/24 注释掉， 你上面已经判断过了，为啥还要判断
-//        if (config["priority"].toString() == "enforced") {
-//            finalDropSlots += enforcedSlot
-//        }
         finalDropSlots += enforcedSlot
-        return finalDropSlots.sortedDescending()
+        return finalDropSlots
+            .sortedDescending()
     }
 
     fun checkDropExp(config: Map<String, Any?>, player: Player): Int {
-        if (config["enable"].cbool) return 0
+        if (!config["enable"].cbool) return 0
         val dropType = config["type"].toString()
         val setting = config["info"].toString()
         val didnt = config["didnt"].cint

@@ -80,6 +80,18 @@ object CheckHandle {
                     }
                 }
             }
+            //DropRestrictionByLevelGap
+            val dropRestrictionByLevelGap = check["dropRestrictionByLevelGap"].asMap()
+            if (dropRestrictionByLevelGap["enable"].cbool) {
+                if (event.killer is Player) {
+                    val killerLevel = (event.killer as Player).level
+                    val ownLevel = player!!.level
+                    val levelGap = dropRestrictionByLevelGap["info"].cint
+                    if (killerLevel - levelGap >= ownLevel) {
+                        return@filter false
+                    }
+                }
+            }
 
             // select config
             val select = check["select"].asMap()
