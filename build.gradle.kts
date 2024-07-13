@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    id("io.izzel.taboolib") version "2.0.11"
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
+    id("io.izzel.taboolib") version "2.0.12"
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
 
 taboolib {
@@ -30,7 +30,7 @@ taboolib {
         }
         desc("Provide a flexible and powerful death punishment system for the Minecraft Bukkit Server")
     }
-    version { taboolib = "6.1.1-beta17" }
+    version { taboolib = "6.1.2-test1" }
 }
 
 repositories {
